@@ -21,6 +21,7 @@ import PatientChoice from './pages/PatientChoice';
 import Structures from './pages/Structures';
 import { CountryGate, askProfile } from './CountryGate';
 import { OfflineBanner } from './OfflineBanner';
+import { HelpBubble } from './HelpBubble';
 import ProInfo from './pages/ProInfo';
 import Search from './pages/Search';
 import { go, href, useRoute } from './router';
@@ -135,7 +136,6 @@ export default function App() {
           <nav aria-label="Menu principal">
             <a href={href('')} className="hide-sm hide-md" aria-current={first ? undefined : 'page'}>Accueil</a>
             <a href={href('tarifs')}>Tarifs</a>
-            <a href={href('urgence')} style={{ color: 'var(--orange)' }}>Urgence</a>
             {SHOWCASE ? null : <AccountMenu signedIn={!!user} name={displayName} />}
             <a href={href('application')} className="btn small hide-sm"><span className="long-label">Télécharger l’application</span><span className="short-label">L’application</span></a>
           </nav>
@@ -161,6 +161,7 @@ export default function App() {
           </div>
           <div>
             <strong>Informations</strong>
+            <a href={href('urgence')}>Urgence médicale</a>
             <a href="/legal/cgu.html">Conditions d’utilisation</a>
             <a href="/legal/confidentialite.html">Confidentialité</a>
             <a href="/legal/mentions-legales.html">Mentions légales</a>
@@ -168,13 +169,7 @@ export default function App() {
           <FooterHelp />
         </div>
       </footer>
-      {whatsapp ? (
-        <a className="whatsapp" href={`https://wa.me/${whatsapp}?text=${encodeURIComponent('Bonjour, j’ai une question sur Ollisanté :')}`}
-          target="_blank" rel="noreferrer" aria-label="Discuter sur WhatsApp avec l’assistance Ollisanté">
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
-          <span>WhatsApp</span>
-        </a>
-      ) : null}
+      <HelpBubble whatsapp={whatsapp ?? null} hours={config.data?.whatsappHours ?? null} />
     </>
   );
 }
