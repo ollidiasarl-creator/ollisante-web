@@ -19,7 +19,7 @@ import Prices from './pages/Prices';
 import Results from './pages/Results';
 import PatientChoice from './pages/PatientChoice';
 import Structures from './pages/Structures';
-import { CountryGate } from './CountryGate';
+import { CountryGate, askProfile } from './CountryGate';
 import { OfflineBanner } from './OfflineBanner';
 import ProInfo from './pages/ProInfo';
 import Search from './pages/Search';
@@ -237,7 +237,16 @@ function AccountMenu({ signedIn, name }: { signedIn: boolean; name: string | nul
       </button>
       {open ? (
         <div className="acct-pop" role="menu">
-          <a role="menuitem" href={href('compte')} onClick={() => setOpen(false)}>Mon compte</a>
+          {signedIn ? (
+            <a role="menuitem" href={href('compte')} onClick={() => setOpen(false)}>Mon compte</a>
+          ) : (
+            <>
+              {/* Même parcours que les cases de l'accueil : le pays, puis (patient) médecin ou structure, puis la connexion. */}
+              <button type="button" role="menuitem" onClick={() => { setOpen(false); askProfile('patient'); }}>Patient</button>
+              <button type="button" role="menuitem" onClick={() => { setOpen(false); askProfile('medecin'); }}>Médecin</button>
+              <button type="button" role="menuitem" onClick={() => { setOpen(false); askProfile('structure'); }}>Structure</button>
+            </>
+          )}
           {signedIn ? (
             <button type="button" role="menuitem" className="danger" onClick={async () => { setOpen(false); await logout(); window.location.hash = '#/'; }}>
               Déconnexion
