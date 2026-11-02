@@ -1,7 +1,10 @@
 /**
  * Affiches (test A/B) : le QR code ouvre le site avec ?src=<profil>-<version> (ex. medecin-a). On compte le scan,
- * on garde la source sur l'appareil, puis on compte l'inscription si elle a lieu. Aucune donnée personnelle.
+ * on garde la source sur l'appareil, puis on compte l'inscription si elle a lieu. Aucune donnée personnelle, et
+ * seulement avec l'accord du visiteur (fenêtre « Vos données, vos choix ») : sans réponse, le scan attend ce choix.
  */
+import { getConsent, onConsent } from './consent';
+
 const KEY = 'ollisante-src';
 const SOURCE = /^[a-z0-9-]{1,40}$/;
 
@@ -29,11 +32,21 @@ export function captureCampaign() {
   const params = new URLSearchParams(window.location.search);
   const src = params.get('src')?.toLowerCase() ?? '';
   if (!SOURCE.test(src)) return;
-  send(src, 'VISIT');
-  try {
-    localStorage.setItem(KEY, src);
-  } catch {
-    // sans stockage, l'inscription ne sera simplement pas attribuée
+  const record = () => {
+    send(src, 'VISIT');
+    try {
+      localStorage.setItem(KEY, src);
+    } catch {
+      // sans stockage, l'inscription ne sera simplement pas attribuée
+    }
+  };
+  const consent = getConsent();
+  if (consent === 'accepted') record();
+  else if (consent === null) {
+    const stop = onConsent((c) => {
+      stop();
+      if (c === 'accepted') record();
+    });
   }
   // Version B de l'affiche structure : l'inscription des structures est sur l'espace Structure.
   if (params.get('vers') === 'structure') {
@@ -54,7 +67,7 @@ export function campaignProfile(): CampaignProfile | null {
 /** Une inscription vient d'aboutir : on l'attribue à l'affiche scannée (une seule fois). */
 export function campaignSignup() {
   const src = stored();
-  if (!src) return;
+  if (!src || getConsent() !== 'accepted') return;
   send(src, 'SIGNUP');
   try {
     localStorage.removeItem(KEY);

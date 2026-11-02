@@ -654,3 +654,8 @@ button.res-item:hover { border-color: var(--green); }
 .btn.wa:hover { background: #18753f; }
 .help-faq { font-size: 14px; color: var(--green); }
 .help-urgent .btn.danger { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+/* Fenêtre « Vos données, vos choix » */
+.consent h2 { font-size: 20px; }
+.consent p { margin: 0; }
+.consent-actions { justify-content: flex-end; flex-wrap: wrap; }

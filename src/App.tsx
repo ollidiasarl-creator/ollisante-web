@@ -22,6 +22,7 @@ import Structures from './pages/Structures';
 import { CountryGate, askProfile } from './CountryGate';
 import { OfflineBanner } from './OfflineBanner';
 import { HelpBubble } from './HelpBubble';
+import { ConsentDialog } from './ConsentDialog';
 import ProInfo from './pages/ProInfo';
 import Search from './pages/Search';
 import { go, href, useRoute } from './router';
@@ -144,6 +145,7 @@ export default function App() {
       <OfflineBanner />
       <main>{page}</main>
       <CountryGate />
+      <ConsentDialog />
       <footer className="foot">
         <div className="wrap cols">
           <div className="stack">
