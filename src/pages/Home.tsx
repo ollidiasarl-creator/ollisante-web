@@ -198,8 +198,7 @@ export default function Home({ light = false }: { light?: boolean }) {
       {news.data && news.data.content.length ? (
         <section className="section news-section">
           <div className="wrap">
-            <h2>Actualités santé{country ? ` · ${countryName(country)}` : ''}</h2>
-            <p className="muted news-lead">Conseils et informations santé, vérifiés par notre équipe.</p>
+            <h2>Actualités{country ? ` · ${countryName(country)}` : ''}</h2>
             <NewsGrid items={news.data.content.slice(0, showAllNews ? undefined : 4)} place={(n) => countryName(n.countryCode)}
               date={(n) => new Date(n.publishedAt).toLocaleDateString('fr-FR')} onOpen={setOpen} />
             {!showAllNews && news.data.content.length > 4 ? (
