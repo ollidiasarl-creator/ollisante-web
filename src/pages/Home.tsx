@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
+import { NewsCarousel } from '../NewsCarousel';
 import { SHOWCASE, useCountry } from '../brand';
 import { useCountries } from '../components';
 import { flag } from '../format';
@@ -136,7 +137,10 @@ export default function Home({ light = false }: { light?: boolean }) {
             {SHOWCASE ? (
               <p className="lead">Ouverture prochaine dans votre pays.</p>
             ) : (
-              <SearchBar />
+              <>
+                <SearchBar />
+                <a className="triage-link" href={href('orientation')}>Vous ne savez pas quel médecin consulter ? Laissez-vous guider →</a>
+              </>
             )}
             {light ? null : (
             <dl className="hero-stats">
@@ -193,15 +197,8 @@ export default function Home({ light = false }: { light?: boolean }) {
       {news.data && news.data.content.length ? (
         <section className="section news-section">
           <div className="wrap">
-            <h2>Actualités{country ? ` · ${countryName(country)}` : ''}</h2>
-            <div className="rail">
-              {news.data.content.map((n) => (
-                <button key={n.id} type="button" className="news-card" onClick={() => setOpen(n)}>
-                  <span className="news-meta">{shortDate(n.publishedAt)} · {countryName(n.countryCode)}</span>
-                  <span className="news-title">{n.title}</span>
-                </button>
-              ))}
-            </div>
+            <h2>Actualités santé{country ? ` · ${countryName(country)}` : ''}</h2>
+            <NewsCarousel items={news.data.content} meta={(n) => `${shortDate(n.publishedAt)} · ${countryName(n.countryCode)}`} onOpen={setOpen} />
           </div>
         </section>
       ) : null}

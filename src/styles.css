@@ -669,3 +669,47 @@ button.res-item:hover { border-color: var(--green); }
 .hero-band .hero-sub { margin: -6px 0 2px; font-size: 17px; }
 /* Slogan sur une seule ligne, même sur téléphone */
 .hero-band h1 { font-size: clamp(16px, 3.8vw, 30px); white-space: nowrap; }
+
+/* ---------- Questionnaire « Quel médecin consulter ? » ---------- */
+.triage-link { display: inline-block; margin-top: 10px; color: var(--white); font-weight: 700; font-size: 15px; text-decoration: underline; text-underline-offset: 3px; }
+.triage { max-width: 640px; display: grid; gap: 18px; }
+.triage h1 { font-size: 24px; }
+.triage-kicker { margin: 0; color: var(--green); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; font-size: 13px; }
+.triage-progress { height: 6px; border-radius: 3px; background: var(--green-soft); overflow: hidden; }
+.triage-progress span { display: block; height: 100%; background: var(--green); transition: width 200ms ease; }
+.triage-options { display: grid; gap: 10px; }
+.triage-options button { text-align: left; padding: 14px 16px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--white); color: var(--navy); font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; }
+.triage-options button:hover { border-color: var(--green); background: var(--green-soft); }
+.triage-options.danger button:hover { border-color: var(--orange); background: var(--orange-soft); }
+.triage-urgent { display: grid; gap: 10px; padding: 18px; }
+.triage-urgent h1 { color: var(--orange); }
+.triage-urgent .btn.danger { background: var(--orange); border-color: var(--orange); color: #fff; }
+.triage-result { display: grid; gap: 10px; }
+.triage-result button { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 14px; border: 1.5px solid var(--border); background: var(--white); color: var(--navy); font: inherit; font-size: 16px; cursor: pointer; text-align: left; }
+.triage-result button.main { background: var(--green); border-color: var(--green); color: var(--white); }
+.triage-result button span { font-weight: 700; font-size: 14px; white-space: nowrap; }
+.triage-actions { justify-content: flex-start; }
+@media (max-width: 720px) { .top nav { gap: 6px; } .pro-pill { padding: 6px 8px; } .book-btn { padding: 7px 10px; } }
+
+/* ---------- Actualités : cartes illustrées qui défilent ---------- */
+.news-carousel { display: grid; gap: 10px; }
+.news-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 2px; }
+.news-track::-webkit-scrollbar { display: none; }
+.news-slide {
+  position: relative; flex: 0 0 min(360px, 82%); height: 200px; scroll-snap-align: start; border: 0; padding: 0; border-radius: 18px;
+  overflow: hidden; cursor: pointer; text-align: left; background-size: cover; background-position: center; font: inherit;
+  box-shadow: 0 10px 24px rgba(15, 42, 71, 0.12); transition: transform 150ms ease;
+}
+.news-slide:hover { transform: translateY(-2px); }
+.news-flag { position: absolute; top: 14px; right: 16px; font-size: 40px; line-height: 1; }
+.news-slide::before { content: ''; position: absolute; width: 220px; height: 220px; border-radius: 50%; right: -60px; top: -90px; background: rgba(255, 255, 255, 0.1); }
+.news-veil { position: absolute; left: 0; right: 0; bottom: 0; display: grid; gap: 3px; padding: 14px 16px; background: linear-gradient(transparent, rgba(15, 42, 71, 0.85) 30%); color: #fff; }
+.news-slide-meta { font-size: 12px; font-weight: 700; opacity: 0.85; }
+.news-slide-title { font-size: 17px; font-weight: 800; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.news-read { font-size: 13px; font-weight: 700; color: var(--gold); }
+.news-nav { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.news-nav button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); background: var(--white); color: var(--navy); font-size: 20px; line-height: 1; cursor: pointer; }
+.news-nav button:hover { border-color: var(--green); color: var(--green); }
+.news-dots { display: flex; gap: 6px; }
+.news-dots span { width: 7px; height: 7px; border-radius: 4px; background: var(--border); transition: width 200ms ease; }
+.news-dots span.on { width: 20px; background: var(--green); }

@@ -16,6 +16,7 @@ import Faq from './pages/Faq';
 import Home from './pages/Home';
 import PractitionerPage from './pages/PractitionerPage';
 import Prices from './pages/Prices';
+import Triage from './pages/Triage';
 import Results from './pages/Results';
 import PatientChoice from './pages/PatientChoice';
 import Structures from './pages/Structures';
@@ -86,6 +87,7 @@ export default function App() {
   else if (first === 'urgence') page = <Emergency />;
   else if (first === 'application') page = <AppDownload />;
   else if (first === 'tarifs') page = <Prices />;
+  else if (first === 'orientation') page = <Triage />;
   else if (first === 'professionnels') page = <ProInfo profile={second === 'structure' ? 'structure' : 'medecin'} />;
   else if (first === 'aide' || first === 'faq') page = <Faq openId={route.query.get('question')} />;
   else page = <Home light={first === 'apercu'} />;
@@ -141,7 +143,7 @@ export default function App() {
                 passent par « Prendre rendez-vous » (pays, médecin ou structure, puis connexion). */}
             {SHOWCASE ? null : user ? <AccountMenu signedIn name={displayName} /> : <ProMenu />}
             {SHOWCASE || user?.user.role === 'PRACTITIONER' ? null : (
-              <button type="button" className="btn small book-btn" onClick={() => askProfile('patient')}>Prendre rendez-vous</button>
+              <button type="button" className="btn small book-btn" onClick={() => askProfile('patient')}><span className="long-label">Prendre rendez-vous</span><span className="short-label">RDV</span></button>
             )}
             <a href={href('application')} className="btn small hide-sm"><span className="long-label">Télécharger l’application</span><span className="short-label">L’application</span></a>
           </nav>
