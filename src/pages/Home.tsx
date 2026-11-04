@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
-import { NewsCarousel } from '../NewsCarousel';
+import { NewsGrid } from '../NewsGrid';
 import { SHOWCASE, useCountry } from '../brand';
 import { useCountries } from '../components';
 import { flag } from '../format';
@@ -111,6 +111,7 @@ export default function Home({ light = false }: { light?: boolean }) {
   }, []);
   const news = useLoad(() => getNews(country || undefined), [country]);
   const [open, setOpen] = useState<News | null>(null);
+  const [showAllNews, setShowAllNews] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const countryName = (code: string | null) =>
     code ? countries.find((c) => c.code === code)?.nameFr ?? code : 'Toute l’Afrique';
@@ -198,7 +199,12 @@ export default function Home({ light = false }: { light?: boolean }) {
         <section className="section news-section">
           <div className="wrap">
             <h2>Actualités santé{country ? ` · ${countryName(country)}` : ''}</h2>
-            <NewsCarousel items={news.data.content} meta={(n) => `${shortDate(n.publishedAt)} · ${countryName(n.countryCode)}`} onOpen={setOpen} />
+            <p className="muted news-lead">Conseils et informations santé, vérifiés par notre équipe.</p>
+            <NewsGrid items={news.data.content.slice(0, showAllNews ? undefined : 4)} place={(n) => countryName(n.countryCode)}
+              date={(n) => new Date(n.publishedAt).toLocaleDateString('fr-FR')} onOpen={setOpen} />
+            {!showAllNews && news.data.content.length > 4 ? (
+              <button type="button" className="btn secondary news-more" onClick={() => setShowAllNews(true)}>Voir toutes les actualités</button>
+            ) : null}
           </div>
         </section>
       ) : null}
