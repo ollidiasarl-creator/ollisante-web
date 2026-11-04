@@ -1,3 +1,4 @@
+import { isDemo } from '../demo';
 import { FormEvent, ReactNode, useEffect, useState } from 'react';
 import { LoginChallenge, Specialty, errorText, getSpecialties, loginWithPassword, registerPractitioner, session } from '../api';
 import { CodeStep, Forgot, Signup, Sms, Terms } from '../Auth';
@@ -73,6 +74,27 @@ export default function Connexion({ profile, next }: { profile: LoginProfile; ne
         <button type="button" className="btn secondary" onClick={() => setView('email')}>Avec mon adresse e-mail</button>
         <SignupLink profile={profile} onSignup={() => setView('signup')} />
       </Screen>
+    );
+  }
+  if (isDemo() && profile !== 'structure') {
+    return (
+      <div className="auth-card">
+        <a href={href('')} aria-label="Ollisanté, accueil" className="auth-logo"><Emblem size={44} /></a>
+        <h1>Bienvenue</h1>
+        <p className="muted">Connectez-vous ou créez un compte pour continuer.</p>
+        <div className="auth-tabs" role="tablist">
+          <button type="button" role="tab" aria-selected="true" className="on">Connexion</button>
+          <button type="button" role="tab" aria-selected="false" onClick={() => setView('signup')}>Inscription</button>
+        </div>
+        <PasswordLogin by="email" onForgot={() => setView('forgot')} />
+        <button type="button" className="btn secondary" onClick={() => setView('phone')}>Avec mon numéro de téléphone</button>
+        {profile === 'patient' ? (
+          <div className="auth-pro">
+            <span>Vous êtes professionnel de santé ?</span>
+            <a className="btn secondary small" href={href('connexion/medecin', { inscription: '1' })}>S’inscrire en tant que médecin</a>
+          </div>
+        ) : null}
+      </div>
     );
   }
   return (

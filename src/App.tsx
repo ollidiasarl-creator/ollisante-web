@@ -20,6 +20,7 @@ import Results from './pages/Results';
 import PatientChoice from './pages/PatientChoice';
 import Structures from './pages/Structures';
 import { CountryGate, askProfile } from './CountryGate';
+import { isDemo } from './demo';
 import { OfflineBanner } from './OfflineBanner';
 import { HelpBubble } from './HelpBubble';
 import { ConsentDialog } from './ConsentDialog';
@@ -64,6 +65,7 @@ export default function App() {
   const current = countries.find((c) => c.code === (locked ?? country));
   const whatsapp = config.data?.whatsappNumber?.replace(/\D/g, '');
   const [first, second] = route.path;
+  const demo = isDemo();
 
   // Chercher un professionnel, voir sa fiche ou celle d'une structure est libre ; seuls réserver et le compte demandent d'être connecté.
   const needsLogin = !user && ['rdv', 'compte', 'structures'].includes(first);
@@ -88,7 +90,7 @@ export default function App() {
   else if (first === 'tarifs') page = <Prices />;
   else if (first === 'professionnels') page = <ProInfo profile={second === 'structure' ? 'structure' : 'medecin'} />;
   else if (first === 'aide' || first === 'faq') page = <Faq openId={route.query.get('question')} />;
-  else page = <Home light={first === 'apercu'} />;
+  else page = <Home light={first === 'apercu'} patientOnly={demo} />;
 
   if (needsLogin || first === 'connexion') {
     return (
@@ -135,8 +137,17 @@ export default function App() {
             </label>
           )}
           <nav aria-label="Menu principal">
-            <a href={href('')} className="hide-sm hide-md" aria-current={first ? undefined : 'page'}>Accueil</a>
-            <a href={href('tarifs')}>Tarifs</a>
+            {demo && !user ? (
+              <>
+                <button type="button" className="pro-pill" onClick={() => askProfile('medecin')}><span className="long-label">Vous êtes soignant ?</span><span className="short-label">Soignant</span></button>
+                <button type="button" className="pro-pill" onClick={() => askProfile('structure')}><span className="long-label">Vous êtes une structure ?</span><span className="short-label">Structure</span></button>
+              </>
+            ) : (
+              <>
+                <a href={href('')} className="hide-sm hide-md" aria-current={first ? undefined : 'page'}>Accueil</a>
+                <a href={href('tarifs')}>Tarifs</a>
+              </>
+            )}
             {SHOWCASE ? null : <AccountMenu signedIn={!!user} name={displayName} />}
             <a href={href('application')} className="btn small hide-sm"><span className="long-label">Télécharger l’application</span><span className="short-label">L’application</span></a>
           </nav>
