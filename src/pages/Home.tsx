@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
 import { NewsGrid } from '../NewsGrid';
-import { HeroAnimated } from '../HeroAnimated';
 import { SHOWCASE, useCountry } from '../brand';
 import { useCountries } from '../components';
 import { flag } from '../format';
@@ -94,7 +93,7 @@ function Chevron() {
 
 /** Accueil : les trois profils comme dans l'application, la recherche, les actualités du pays et le téléchargement. */
 /** `light` : variante aérée (titre et recherche, profils, spécialités en pastilles, engagements en une ligne, actualités). */
-export default function Home({ light = false, animated = false }: { light?: boolean; animated?: boolean }) {
+export default function Home({ light = false }: { light?: boolean }) {
   const countries = useCountries();
   const [country, setCountry] = useCountry();
   const user = useSession();
@@ -124,7 +123,6 @@ export default function Home({ light = false, animated = false }: { light?: bool
 
   return (
     <>
-      {animated ? <HeroAnimated countryCount={countries.length} /> : (
       <section className="hero-band">
         <div className="wrap hero-band-grid">
           <div className="hero-copy">
@@ -155,7 +153,6 @@ export default function Home({ light = false, animated = false }: { light?: bool
           </div>
         </div>
       </section>
-      )}
 
       <section className="wrap profile-row" aria-label="Je suis">
         <a className="profile-tile patient" href={href('patient')} onClick={(e) => { e.preventDefault(); askProfile('patient'); }}>
