@@ -92,7 +92,7 @@ function Chevron() {
 
 /** Accueil : les trois profils comme dans l'application, la recherche, les actualités du pays et le téléchargement. */
 /** `light` : variante aérée (titre et recherche, profils, spécialités en pastilles, engagements en une ligne, actualités). */
-export default function Home({ light = false, patientOnly = false }: { light?: boolean; patientOnly?: boolean }) {
+export default function Home({ light = false }: { light?: boolean }) {
   const countries = useCountries();
   const [country, setCountry] = useCountry();
   const user = useSession();
@@ -148,13 +148,12 @@ export default function Home({ light = false, patientOnly = false }: { light?: b
         </div>
       </section>
 
-      <section className={`wrap profile-row${patientOnly ? ' patient-only' : ''}`} aria-label="Je suis">
+      <section className="wrap profile-row" aria-label="Je suis">
         <a className="profile-tile patient" href={href('patient')} onClick={(e) => { e.preventDefault(); askProfile('patient'); }}>
           <span className="tile-icon">{ICONS.patient}</span>
           <span className="tile-text"><strong>Patient</strong><span>Prendre rendez-vous</span></span>
           <Chevron />
         </a>
-        {patientOnly ? null : (<>
         <a className="profile-tile practitioner" href={user ? href('compte') : href('connexion/medecin')} onClick={(e) => { if (user) return; e.preventDefault(); askProfile('medecin'); }}>
           <span className="tile-icon">{ICONS.practitioner}</span>
           <span className="tile-text"><strong>Médecin</strong><span>Gérer mes patients</span></span>
@@ -165,7 +164,6 @@ export default function Home({ light = false, patientOnly = false }: { light?: b
           <span className="tile-text"><strong>Structure</strong><span>Clinique, hôpital, cabinet</span></span>
           <Chevron />
         </a>
-        </>)}
       </section>
 
       {SHOWCASE ? null : light ? (

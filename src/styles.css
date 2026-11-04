@@ -660,17 +660,9 @@ button.res-item:hover { border-color: var(--green); }
 .consent p { margin: 0; }
 .consent-actions { justify-content: flex-end; flex-wrap: wrap; }
 
-/* ---------- Démo parcours patient ---------- */
+/* ---------- En-tête : Espace pro, Prendre rendez-vous ---------- */
 .pro-pill { border: 1.5px solid var(--green); background: var(--white); color: var(--green); font: inherit; font-weight: 700; font-size: 14px; padding: 7px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
 .pro-pill:hover { background: var(--green-soft); }
-.profile-row.patient-only { grid-template-columns: minmax(0, 420px); justify-content: center; }
-.profile-row.patient-only .profile-tile { min-height: 0; padding: 12px 18px; }
-@media (max-width: 720px) { .pro-pill { font-size: 12px; padding: 6px 9px; } }
-.auth-card { display: grid; gap: 14px; padding: 28px 24px; border: 1px solid var(--border); border-radius: 18px; background: var(--white); box-shadow: 0 12px 30px rgba(15, 42, 71, 0.08); text-align: left; }
-.auth-card h1 { text-align: center; margin: 0; }
-.auth-card > .muted { text-align: center; margin: -6px 0 4px; }
-.auth-logo { justify-self: center; }
-.auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 12px; background: var(--green-soft); }
-.auth-tabs button { border: 0; background: transparent; padding: 9px; border-radius: 9px; font: inherit; font-weight: 700; color: var(--muted); cursor: pointer; }
-.auth-tabs button.on { background: var(--white); color: var(--navy); box-shadow: 0 1px 3px rgba(15, 42, 71, 0.12); }
-.auth-pro { display: grid; gap: 8px; justify-items: center; padding-top: 14px; border-top: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+.book-btn { background: var(--navy); border-color: var(--navy); white-space: nowrap; }
+.book-btn:hover { background: #0a1f36; }
+@media (max-width: 720px) { .pro-pill { font-size: 12px; padding: 6px 9px; } .book-btn { font-size: 12px; padding: 7px 10px; } }

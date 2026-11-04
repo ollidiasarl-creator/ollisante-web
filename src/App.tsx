@@ -20,7 +20,6 @@ import Results from './pages/Results';
 import PatientChoice from './pages/PatientChoice';
 import Structures from './pages/Structures';
 import { CountryGate, askProfile } from './CountryGate';
-import { isDemo } from './demo';
 import { OfflineBanner } from './OfflineBanner';
 import { HelpBubble } from './HelpBubble';
 import { ConsentDialog } from './ConsentDialog';
@@ -65,7 +64,6 @@ export default function App() {
   const current = countries.find((c) => c.code === (locked ?? country));
   const whatsapp = config.data?.whatsappNumber?.replace(/\D/g, '');
   const [first, second] = route.path;
-  const demo = isDemo();
 
   // Chercher un professionnel, voir sa fiche ou celle d'une structure est libre ; seuls réserver et le compte demandent d'être connecté.
   const needsLogin = !user && ['rdv', 'compte', 'structures'].includes(first);
@@ -90,7 +88,7 @@ export default function App() {
   else if (first === 'tarifs') page = <Prices />;
   else if (first === 'professionnels') page = <ProInfo profile={second === 'structure' ? 'structure' : 'medecin'} />;
   else if (first === 'aide' || first === 'faq') page = <Faq openId={route.query.get('question')} />;
-  else page = <Home light={first === 'apercu'} patientOnly={demo} />;
+  else page = <Home light={first === 'apercu'} />;
 
   if (needsLogin || first === 'connexion') {
     return (
@@ -137,17 +135,14 @@ export default function App() {
             </label>
           )}
           <nav aria-label="Menu principal">
-            {demo && !user ? (
-              <>
-                <ProMenu />
-              </>
-            ) : (
-              <>
-                <a href={href('')} className="hide-sm hide-md" aria-current={first ? undefined : 'page'}>Accueil</a>
-                <a href={href('tarifs')}>Tarifs</a>
-              </>
+            <a href={href('')} className="hide-sm hide-md" aria-current={first ? undefined : 'page'}>Accueil</a>
+            <a href={href('tarifs')} className="hide-sm">Tarifs</a>
+            {/* Connecté : son nom (Mon compte, Déconnexion). Sinon « Espace pro » (médecin, structure) ; les patients
+                passent par « Prendre rendez-vous » (pays, médecin ou structure, puis connexion). */}
+            {SHOWCASE ? null : user ? <AccountMenu signedIn name={displayName} /> : <ProMenu />}
+            {SHOWCASE || user?.user.role === 'PRACTITIONER' ? null : (
+              <button type="button" className="btn small book-btn" onClick={() => askProfile('patient')}>Prendre rendez-vous</button>
             )}
-            {SHOWCASE ? null : <AccountMenu signedIn={!!user} name={displayName} />}
             <a href={href('application')} className="btn small hide-sm"><span className="long-label">Télécharger l’application</span><span className="short-label">L’application</span></a>
           </nav>
         </div>
@@ -265,7 +260,7 @@ function AccountMenu({ signedIn, name }: { signedIn: boolean; name: string | nul
   );
 }
 
-/** « Espace pro » (démo) : un seul bouton, qui propose ensuite Médecin ou Structure (puis le pays et la connexion). */
+/** « Espace pro » : un seul bouton, qui propose ensuite Médecin ou Structure (puis le pays et la connexion). */
 function ProMenu() {
   const [open, setOpen] = useState(false);
   const box = useRef<HTMLDivElement>(null);
