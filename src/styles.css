@@ -668,4 +668,4 @@ button.res-item:hover { border-color: var(--green); }
 @media (max-width: 720px) { .pro-pill { font-size: 12px; padding: 6px 9px; } .book-btn { font-size: 12px; padding: 7px 10px; } }
 .hero-band .hero-sub { margin: -6px 0 2px; font-size: 17px; }
 /* Slogan sur une seule ligne, même sur téléphone */
-.hero-band h1 { font-size: clamp(19px, 4.6vw, 48px); white-space: nowrap; }
+.hero-band h1 { font-size: clamp(16px, 3.8vw, 30px); white-space: nowrap; }
