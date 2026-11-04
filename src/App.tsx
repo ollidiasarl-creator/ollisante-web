@@ -90,7 +90,7 @@ export default function App() {
   else if (first === 'orientation') page = <Triage />;
   else if (first === 'professionnels') page = <ProInfo profile={second === 'structure' ? 'structure' : 'medecin'} />;
   else if (first === 'aide' || first === 'faq') page = <Faq openId={route.query.get('question')} />;
-  else page = <Home light={first === 'apercu'} />;
+  else page = <Home light={first === 'apercu'} animated={first === 'apercu-anime'} />;
 
   if (needsLogin || first === 'connexion') {
     return (
