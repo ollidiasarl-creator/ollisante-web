@@ -139,8 +139,7 @@ export default function App() {
           <nav aria-label="Menu principal">
             {demo && !user ? (
               <>
-                <button type="button" className="pro-pill" onClick={() => askProfile('medecin')}><span className="long-label">Vous êtes soignant ?</span><span className="short-label">Soignant</span></button>
-                <button type="button" className="pro-pill" onClick={() => askProfile('structure')}><span className="long-label">Vous êtes une structure ?</span><span className="short-label">Structure</span></button>
+                <ProMenu />
               </>
             ) : (
               <>
@@ -260,6 +259,41 @@ function AccountMenu({ signedIn, name }: { signedIn: boolean; name: string | nul
               Déconnexion
             </button>
           ) : null}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** « Espace pro » (démo) : un seul bouton, qui propose ensuite Médecin ou Structure (puis le pays et la connexion). */
+function ProMenu() {
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: MouseEvent | KeyboardEvent) => {
+      if (e instanceof KeyboardEvent ? e.key === 'Escape' : !box.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', close);
+    document.addEventListener('keydown', close);
+    return () => {
+      document.removeEventListener('mousedown', close);
+      document.removeEventListener('keydown', close);
+    };
+  }, [open]);
+  const pick = (p: 'medecin' | 'structure') => {
+    setOpen(false);
+    askProfile(p);
+  };
+  return (
+    <div className="acct-menu" ref={box}>
+      <button type="button" className="pro-pill" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        Espace pro
+      </button>
+      {open ? (
+        <div className="acct-pop" role="menu">
+          <button type="button" role="menuitem" onClick={() => pick('medecin')}>Médecin</button>
+          <button type="button" role="menuitem" onClick={() => pick('structure')}>Structure</button>
         </div>
       ) : null}
     </div>
