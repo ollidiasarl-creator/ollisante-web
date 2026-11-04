@@ -666,3 +666,4 @@ button.res-item:hover { border-color: var(--green); }
 .book-btn { background: var(--navy); border-color: var(--navy); white-space: nowrap; }
 .book-btn:hover { background: #0a1f36; }
 @media (max-width: 720px) { .pro-pill { font-size: 12px; padding: 6px 9px; } .book-btn { font-size: 12px; padding: 7px 10px; } }
+.hero-band .hero-sub { margin: -6px 0 2px; font-size: 17px; }

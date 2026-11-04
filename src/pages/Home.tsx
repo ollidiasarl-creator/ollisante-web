@@ -124,7 +124,8 @@ export default function Home({ light = false }: { light?: boolean }) {
       <section className="hero-band">
         <div className="wrap hero-band-grid">
           <div className="hero-copy">
-            <h1>Votre santé, <em>simplement</em></h1>
+            <h1>Votre rendez-vous médical, <em>simplement</em></h1>
+            <p className="lead hero-sub">Trouvez un médecin et réservez en ligne, 24 h/24.</p>
             {light ? null : (
             <ul className="hero-points">
               <li><Check />Médecins vérifiés</li>
