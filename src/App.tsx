@@ -138,7 +138,6 @@ export default function App() {
           )}
           <nav aria-label="Menu principal">
             <a href={href('')} className="hide-sm hide-md" aria-current={first ? undefined : 'page'}>Accueil</a>
-            <a href={href('tarifs')} className="hide-sm">Tarifs</a>
             {/* Connecté : son nom (Mon compte, Déconnexion). Sinon « Espace pro » (médecin, structure) ; les patients
                 passent par « Prendre rendez-vous » (pays, médecin ou structure, puis connexion). */}
             {SHOWCASE ? null : user ? <AccountMenu signedIn name={displayName} /> : <ProMenu />}
