@@ -709,3 +709,31 @@ button.res-item:hover { border-color: var(--green); }
 .news-item-title { font-size: 17px; line-height: 1.3; }
 .news-excerpt { color: var(--muted); font-size: 14px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .news-more { justify-self: center; margin-top: 6px; }
+
+/* ---------- Accueil : médecins disponibles (démo #/demo-dispo) ---------- */
+.avail-section { padding-top: 28px; }
+.avail-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.avail-head h2 { margin: 0 0 4px; }
+.avail-head p { margin: 0; }
+.avail-all { font-weight: 700; white-space: nowrap; }
+.avail-chips { display: flex; gap: 8px; overflow-x: auto; padding: 14px 0 16px; scrollbar-width: none; }
+.avail-chips::-webkit-scrollbar { display: none; }
+.avail-chips button { flex: none; border: 1.5px solid var(--border, #d9e3df); background: #fff; color: var(--navy, #0f2a47); border-radius: 999px; padding: 7px 14px; font: inherit; font-weight: 600; cursor: pointer; }
+.avail-chips button.on { background: var(--green, #1a6e52); border-color: var(--green, #1a6e52); color: #fff; }
+.avail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.avail-card { background: #fff; border: 1px solid var(--border, #d9e3df); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 10px rgba(15, 42, 71, .05); }
+.avail-card.skeleton { min-height: 230px; background: linear-gradient(90deg, #f1f5f3 0%, #e7eeeb 50%, #f1f5f3 100%); background-size: 200% 100%; animation: avail-shine 1.2s infinite; }
+@keyframes avail-shine { to { background-position: -200% 0; } }
+.avail-card header { display: flex; gap: 12px; align-items: center; }
+.avail-card header > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.avail-card .avatar { flex: none; }
+.avail-name { font-weight: 800; color: var(--navy, #0f2a47); font-size: 17px; }
+.avail-next { margin: 0; font-size: 14px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; color: var(--navy, #0f2a47); }
+.avail-next .dot { width: 9px; height: 9px; border-radius: 50%; background: #22a06b; box-shadow: 0 0 0 4px rgba(34, 160, 107, .15); }
+.avail-days { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.avail-day { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
+.avail-day-name { font-size: 12.5px; font-weight: 700; color: var(--muted, #5b6b7a); text-align: center; text-transform: capitalize; }
+.avail-day .slot { width: 100%; }
+.avail-more { align-self: center; font-weight: 700; }
+@media (max-width: 520px) { .avail-grid { grid-template-columns: 1fr; } }
+.avail-day .slot.empty { text-align: center; background: transparent; }

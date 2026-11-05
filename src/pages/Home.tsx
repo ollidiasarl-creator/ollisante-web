@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
 import { NewsGrid } from '../NewsGrid';
+import { AvailableNow } from '../AvailableNow';
 import { SHOWCASE, useCountry } from '../brand';
 import { useCountries } from '../components';
 import { flag } from '../format';
@@ -93,7 +94,8 @@ function Chevron() {
 
 /** Accueil : les trois profils comme dans l'application, la recherche, les actualités du pays et le téléchargement. */
 /** `light` : variante aérée (titre et recherche, profils, spécialités en pastilles, engagements en une ligne, actualités). */
-export default function Home({ light = false }: { light?: boolean }) {
+/** {@code availability} : démo de l'accueil avec les médecins disponibles (adresse #/demo-dispo). */
+export default function Home({ light = false, availability = false }: { light?: boolean; availability?: boolean }) {
   const countries = useCountries();
   const [country, setCountry] = useCountry();
   const user = useSession();
@@ -171,6 +173,8 @@ export default function Home({ light = false }: { light?: boolean }) {
           <Chevron />
         </a>
       </section>
+
+      {availability ? <AvailableNow country={country} /> : null}
 
       {SHOWCASE ? null : light ? (
         <section className="section light-section">
