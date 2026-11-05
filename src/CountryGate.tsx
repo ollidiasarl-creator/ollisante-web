@@ -47,7 +47,7 @@ export function CountryGate() {
   const countries = useCountries();
 
   function finish(a: Ask, pays: string) {
-    if ('specialty' in a) return openAsPatient(href('recherche', { pays, specialite: a.specialty.code, ...where() }), !!user);
+    if ('specialty' in a) return openAsPatient(href('disponibilites', { pays, specialite: a.specialty.code, ...where() }), !!user);
     if (a.profile === 'medecin') return user ? go('compte') : go('connexion/medecin');
     if (a.profile === 'structure') {
       window.location.href = '/structure/';
@@ -124,7 +124,7 @@ export function CountryGate() {
         <div className="modal card stack gate-choice">
           <p className="gate-tag">{flag(code)} {[locality, city, name].filter(Boolean).join(', ')}</p>
           <h2 id="gate-title">Vous souhaitez consulter</h2>
-          <button type="button" className="choice-card doctor" onClick={() => { close(); openAsPatient(href('recherche', { pays: code, ...where() }), !!user); }}>
+          <button type="button" className="choice-card doctor" onClick={() => { close(); openAsPatient(href('disponibilites', { pays: code, ...where() }), !!user); }}>
             <strong>Un médecin</strong>
           </button>
           <button type="button" className="choice-card structure" onClick={() => { close(); openAsPatient(href('structures', { pays: code, ...where() }), !!user); }}>

@@ -778,3 +778,33 @@ button.res-item:hover { border-color: var(--green); }
 }
 .drow-short { display: none; }
 @media (max-width: 760px) { .drow-long { display: none; } .drow-short { display: inline; } }
+
+/* ---------- Page « Médecins disponibles » : tableau récapitulatif + détail ---------- */
+.recap { margin: 8px 0 28px; padding: 22px 24px; }
+.recap-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.recap-head h2 { margin: 0; font-size: 22px; }
+.recap-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.recap-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+.recap-table th, .recap-table td { padding: 10px 8px; border-bottom: 1px solid var(--border, #e3ebe7); text-align: left; vertical-align: middle; }
+.recap-table thead th { font-size: 13.5px; color: var(--muted, #5b6b7a); font-weight: 700; text-transform: capitalize; border-bottom: 2px solid var(--border, #d9e3df); }
+.recap-table tbody th { font-weight: 400; min-width: 180px; }
+.recap-table tbody th a { display: block; font-weight: 800; color: var(--green, #176b50); text-decoration: none; font-size: 15.5px; }
+.recap-table tbody th a:hover { text-decoration: underline; }
+.recap-table tbody th span { font-size: 13.5px; color: var(--muted, #5b6b7a); }
+.recap-table tbody tr:last-child th, .recap-table tbody tr:last-child td { border-bottom: 0; }
+.recap-where { font-size: 14px; color: var(--navy, #0f2a47); min-width: 120px; }
+.recap-day { text-align: center !important; width: 11%; }
+.recap-slot { border: 0; border-radius: 8px; background: var(--green-soft, #e7f2ed); color: var(--green, #176b50); font: inherit; font-weight: 800; font-size: 15px; padding: 8px 10px; cursor: pointer; white-space: nowrap; }
+.recap-slot small { margin-left: 4px; font-weight: 700; font-size: 12px; color: var(--muted, #5b6b7a); }
+.recap-slot:hover { background: var(--green, #176b50); color: #fff; }
+.recap-slot:hover small { color: #d7ebe3; }
+.recap-none { color: #b4c2bc; }
+.recap-note { margin: 12px 0 0; }
+.recap-detail h2 { font-size: 22px; margin: 0 0 14px; }
+.recap-anchor { scroll-margin-top: 90px; }
+@media (max-width: 760px) {
+  .recap { padding: 16px 12px; }
+  .recap-where { display: none; }
+  .recap-table { min-width: 520px; }
+  .recap-table tbody th { min-width: 140px; position: sticky; left: 0; background: #fff; }
+}

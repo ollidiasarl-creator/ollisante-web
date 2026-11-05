@@ -14,7 +14,7 @@ import { PlaceFields } from './Places';
  */
 export function SearchForm({ initial, className, page = 'recherche' }: {
   initial?: { pays?: string; ville?: string; localite?: string; specialite?: string; q?: string }; className: string;
-  page?: 'recherche' | 'structures';
+  page?: 'recherche' | 'structures' | 'disponibilites';
 }) {
   const countries = useCountries();
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
@@ -23,7 +23,7 @@ export function SearchForm({ initial, className, page = 'recherche' }: {
   const specialite = initial?.specialite ?? '';
   const ville = initial?.ville ?? '';
   const localite = initial?.localite ?? '';
-  const doctors = page === 'recherche';
+  const doctors = page !== 'structures';
   const [q, setQ] = useState(initial?.q ?? '');
   useEffect(() => {
     getSpecialties().then((l) => setSpecialties([...l].sort((a, b) => a.nameFr.localeCompare(b.nameFr, 'fr')))).catch(() => undefined);

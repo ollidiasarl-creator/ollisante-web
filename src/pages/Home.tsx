@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
 import { NewsGrid } from '../NewsGrid';
-import { AvailableNow } from '../AvailableNow';
 import { SHOWCASE, useCountry } from '../brand';
 import { useCountries } from '../components';
 import { flag } from '../format';
@@ -173,7 +172,6 @@ export default function Home({ light = false }: { light?: boolean }) {
         </a>
       </section>
 
-      {SHOWCASE || light ? null : <AvailableNow country={country} list />}
 
       {SHOWCASE ? null : light ? (
         <section className="section light-section">

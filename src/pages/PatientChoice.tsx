@@ -50,7 +50,7 @@ export default function PatientChoice() {
         </label>
 
         <div className="choice-row">
-          <button type="button" className="choice-card doctor" disabled={!pays} onClick={() => choose(href('recherche', { pays }))}>
+          <button type="button" className="choice-card doctor" disabled={!pays} onClick={() => choose(href('disponibilites', { pays }))}>
             <span className="choice-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M5 2v2 M11 2v2 M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1 M8 15a6 6 0 0 0 12 0v-3 M20 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" /></svg>
             </span>

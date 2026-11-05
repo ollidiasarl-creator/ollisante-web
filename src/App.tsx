@@ -26,6 +26,7 @@ import { HelpBubble } from './HelpBubble';
 import { ConsentDialog } from './ConsentDialog';
 import ProInfo from './pages/ProInfo';
 import Search from './pages/Search';
+import Availability from './pages/Availability';
 import { go, href, useRoute } from './router';
 
 /** Site public Ollisanté : recherche, fiches des professionnels et des structures, réservation, espace patient. */
@@ -77,6 +78,7 @@ export default function App() {
     page = <Connexion profile={profile} next={route.query.get('suite')} />;
   }
   else if (first === 'recherche') page = <Search query={route.query} />;
+  else if (first === 'disponibilites') page = <Availability query={route.query} />;
   else if (first === 'patient') page = <PatientChoice />;
   else if (first === 'structures') page = <Structures pays={route.query.get('pays') ?? ''} ville={route.query.get('ville') ?? ''} localite={route.query.get('localite') ?? ''} />;
   else if (first === 'resultats') page = <Results q={route.query.get('q') ?? ''} />;
