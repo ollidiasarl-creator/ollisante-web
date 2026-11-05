@@ -738,3 +738,43 @@ button.res-item:hover { border-color: var(--green); }
 @media (max-width: 520px) { .avail-grid { grid-template-columns: 1fr; } }
 .avail-day .slot.empty { text-align: center; background: transparent; }
 .guest-note { margin: 8px 0 0; }
+
+/* ---------- Fiche médecin en ligne (démo #/demo-liste) ---------- */
+.drow-list { display: flex; flex-direction: column; gap: 16px; }
+.drow { display: grid; grid-template-columns: minmax(260px, 36%) 1fr; gap: 28px; background: #fff; border: 1px solid var(--border, #d9e3df); border-radius: 14px; padding: 22px 24px; box-shadow: 0 1px 6px rgba(15, 42, 71, .05); }
+.drow-who { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.drow-head { display: flex; gap: 14px; align-items: center; }
+.drow-avatar { flex: none; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--green-soft, #e7f2ed); color: var(--green, #176b50); font-weight: 800; font-size: 20px; }
+.drow-name { font-size: 19px; font-weight: 800; color: var(--green, #176b50); text-decoration: none; }
+.drow-name:hover { text-decoration: underline; }
+.drow-spec { margin: 2px 0 0; color: var(--navy, #0f2a47); font-size: 15.5px; }
+.drow-facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: var(--navy, #0f2a47); }
+.drow-facts li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.45; }
+.drow-facts svg { flex: none; margin-top: 2px; color: var(--muted, #5b6b7a); }
+.drow-profile { align-self: flex-start; font-weight: 700; font-size: 14.5px; }
+.drow-agenda { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.drow-days, .drow-slots { display: grid; grid-template-columns: 28px repeat(5, minmax(0, 1fr)) 28px; gap: 8px; align-items: start; }
+.drow-slots { grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 0 36px; }
+.drow-day { text-align: center; display: flex; flex-direction: column; gap: 2px; }
+.drow-day strong { font-size: 14.5px; color: var(--navy, #0f2a47); text-transform: capitalize; }
+.drow-day span { font-size: 13.5px; color: var(--muted, #5b6b7a); }
+.drow-nav { border: 0; background: transparent; color: var(--green, #176b50); font-size: 28px; line-height: 1; cursor: pointer; padding: 0; align-self: center; }
+.drow-nav:disabled { color: #c3cfca; cursor: default; }
+.drow-col { display: flex; flex-direction: column; gap: 8px; }
+.drow-slot { border: 0; border-radius: 8px; background: var(--green-soft, #e7f2ed); color: var(--green, #176b50); font: inherit; font-weight: 700; font-size: 15px; padding: 9px 4px; cursor: pointer; }
+.drow-slot:hover { background: var(--green, #176b50); color: #fff; }
+.drow-none { text-align: center; color: #b4c2bc; padding: 9px 0; }
+.drow-more { align-self: center; border: 0; background: transparent; color: var(--green, #176b50); font: inherit; font-weight: 700; font-size: 14.5px; cursor: pointer; }
+.drow-empty { display: flex; justify-content: center; padding: 26px 0; }
+.drow-next { border: 0; border-radius: 10px; background: var(--gold, #d9a441); color: var(--navy, #0f2a47); font: inherit; font-weight: 700; font-size: 15px; padding: 11px 18px; cursor: pointer; }
+.drow-wait { margin: 0; text-align: center; color: var(--muted, #5b6b7a); font-size: 14.5px; padding: 22px 0; }
+@media (max-width: 760px) {
+  .drow { grid-template-columns: 1fr; gap: 18px; padding: 18px; }
+  .drow-days { grid-template-columns: 24px repeat(5, minmax(0, 1fr)) 24px; gap: 4px; }
+  .drow-slots { padding: 0 28px; gap: 4px; }
+  .drow-day strong { font-size: 12.5px; }
+  .drow-day span { font-size: 12px; }
+  .drow-slot { font-size: 13.5px; padding: 8px 2px; }
+}
+.drow-short { display: none; }
+@media (max-width: 760px) { .drow-long { display: none; } .drow-short { display: inline; } }

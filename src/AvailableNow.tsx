@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Practitioner, Slot, getSlots, searchPractitioners } from './api';
+import { Facility, Practitioner, Slot, getFacilities, getSlots, searchPractitioners } from './api';
+import { DoctorRow } from './DoctorRow';
 import { askProfile } from './CountryGate';
 import { useCountries } from './components';
 import { addDays, flag, initials, isoDate, money, time } from './format';
@@ -35,11 +36,17 @@ const dayName = (d: Date) => {
  * Accueil : les médecins qui ont des créneaux libres dans les prochains jours, les plus tôt disponibles d'abord.
  * Un clic sur un horaire mène à la réservation (après connexion pour un visiteur).
  */
-export function AvailableNow({ country }: { country: string }) {
+/** {@code list} : fiches en ligne (identité à gauche, horaires sur 5 jours à droite) au lieu des cartes. */
+export function AvailableNow({ country, list = false }: { country: string; list?: boolean }) {
   const countries = useCountries();
   const user = useSession();
   const [spec, setSpec] = useState('');
   const [rows, setRows] = useState<Row[] | null>(null);
+  const [facilities, setFacilities] = useState<Facility[]>([]);
+  useEffect(() => {
+    if (!list) return;
+    getFacilities(country || undefined).then(setFacilities).catch(() => undefined);
+  }, [country, list]);
 
   useEffect(() => {
     let live = true;
@@ -90,6 +97,10 @@ export function AvailableNow({ country }: { country: string }) {
           </div>
         ) : rows.length === 0 ? (
           <div className="empty-state card">Aucune disponibilité dans les prochains jours pour ce choix. Essayez une autre spécialité ou un autre pays.</div>
+        ) : list ? (
+          <div className="drow-list">
+            {rows.map(({ p, slots }) => <DoctorRow key={p.id} p={p} facilities={facilities} next={slots[0]} onPick={(s) => book(p, s)} />)}
+          </div>
         ) : (
           <div className="avail-grid">
             {rows.map(({ p, slots }) => {

@@ -1,7 +1,7 @@
 import { FormEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FaqEntry, News, Practitioner, Specialty, getFaq, getNews, getSpecialties, searchPractitioners } from './api';
 import { askCountry } from './CountryGate';
-import { PAGES, exactSpecialty, fold, frequentSpecialties, suggest, suggestSpecialties, suggestTopics } from './searchIndex';
+import { PAGES, exactSpecialty, fold, suggest, suggestSpecialties, suggestTopics } from './searchIndex';
 import { Field, useCountries } from './components';
 import { flag } from './format';
 import { go, href } from './router';
@@ -121,7 +121,8 @@ export function SearchBar({ initial = '' }: { initial?: string }) {
   type Item = { key: string; group: string; label: string; sub?: string; icon: string; run: () => void };
   // Dès la première lettre : thématiques, spécialités, informations et actualités qui commencent par ces lettres.
   const topics = term ? suggestTopics(text).slice(0, 5) : [];
-  const specs = term ? suggestSpecialties(text, specialties).slice(0, 4) : frequentSpecialties(specialties).slice(0, 6);
+  // Rien n'est proposé tant que la personne n'a pas commencé à taper : la liste n'apparaît qu'à la première lettre.
+  const specs = term ? suggestSpecialties(text, specialties).slice(0, 4) : [];
   const infos = term
     ? [
         ...suggest(text, PAGES, (p) => p.title, (p) => p.keywords).slice(0, 3),
@@ -131,7 +132,7 @@ export function SearchBar({ initial = '' }: { initial?: string }) {
   const articles = term ? suggest(text, news, (n) => n.title).slice(0, 2) : [];
   const items: Item[] = [
     ...topics.map((x) => ({ key: `t-${x}`, group: 'Thématiques', label: x, icon: '#', run: () => go('resultats', { q: x }) })),
-    ...specs.map((x) => ({ key: `s-${x.code}`, group: term ? 'Spécialités' : 'Spécialités fréquentes', label: x.nameFr, icon: '✚', run: () => { setOpen(false); askCountry(x); } })),
+    ...specs.map((x) => ({ key: `s-${x.code}`, group: 'Spécialités', label: x.nameFr, icon: '✚', run: () => { setOpen(false); askCountry(x); } })),
     ...pros.map((x) => ({
       key: `p-${x.id}`, group: 'Professionnels', label: `Dr ${x.firstName} ${x.lastName}`, sub: x.specialties.map((y) => y.nameFr).join(', '), icon: 'Dr',
       run: () => go(`medecin/${x.id}`),
