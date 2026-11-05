@@ -148,8 +148,10 @@ export interface Country {
 export interface Specialty { code: string; nameFr: string }
 export interface Facility {
   id: string; name: string; countryCode: string; city: string | null; address: string | null; phone: string | null;
-  organizationType: string | null;
+  organizationType: string | null; locality: string | null;
 }
+/** Une ville et ses localités (quartiers, communes). */
+export interface Place { city: string; localities: string[] }
 export interface Practitioner {
   id: string; firstName: string; lastName: string; countryCode: string; specialties: Specialty[];
   consultationFeeMinor: number | null; feeCurrency: string | null; teleconsultationEnabled: boolean; bio: string | null;
@@ -171,12 +173,15 @@ export const getSpecialties = () =>
     specialtiesCache = null;
     throw e;
   }));
-export const getFacilities = (countryCode?: string) =>
-  api<Facility[]>(`/api/v1/facilities${q({ countryCode })}`, { auth: false });
+export const getFacilities = (countryCode?: string, city?: string, locality?: string) =>
+  api<Facility[]>(`/api/v1/facilities${q({ countryCode, city, locality })}`, { auth: false });
+/** Villes (et localités) d'un pays où des soins sont proposés. */
+export const getPlaces = (countryCode: string) =>
+  api<Place[]>(`/api/v1/facilities/places${q({ countryCode })}`, { auth: false });
 export const findFacility = async (id: string) => (await getFacilities()).find((f) => f.id === id) ?? null;
 export const getFacilitySpecialties = (id: string) =>
   api<Specialty[]>(`/api/v1/facilities/${id}/specialties`, { auth: false });
-export const searchPractitioners = (p: { countryCode?: string; specialty?: string; q?: string; facilityId?: string; page?: number }) =>
+export const searchPractitioners = (p: { countryCode?: string; specialty?: string; q?: string; facilityId?: string; city?: string; locality?: string; page?: number }) =>
   api<Page<Practitioner>>(`/api/v1/practitioners${q({ ...p, size: 20 })}`, { auth: false });
 export const getPractitioner = (id: string) => api<Practitioner>(`/api/v1/practitioners/${id}`, { auth: false });
 export const getSlots = (id: string, from: string, to: string, facilityId?: string) =>

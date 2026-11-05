@@ -4,6 +4,7 @@ import { useCountry, useLockedCountry } from './brand';
 import { useCountries } from './components';
 import { flag } from './format';
 import { useSession } from './hooks';
+import { PlaceFields } from './Places';
 import { go, href } from './router';
 
 const EVENT = 'ollisante-country-gate';
@@ -37,12 +38,16 @@ export function CountryGate() {
   const [step, setStep] = useState<'country' | 'choice'>('country');
   const [country, setCountry] = useCountry();
   const [code, setCode] = useState('');
+  // Ville et localité : facultatives, proposées au patient une fois le pays choisi.
+  const [city, setCity] = useState('');
+  const [locality, setLocality] = useState('');
+  const where = () => ({ ville: city || undefined, localite: locality || undefined });
   const locked = useLockedCountry();
   const user = useSession();
   const countries = useCountries();
 
   function finish(a: Ask, pays: string) {
-    if ('specialty' in a) return openAsPatient(href('recherche', { pays, specialite: a.specialty.code }), !!user);
+    if ('specialty' in a) return openAsPatient(href('recherche', { pays, specialite: a.specialty.code, ...where() }), !!user);
     if (a.profile === 'medecin') return user ? go('compte') : go('connexion/medecin');
     if (a.profile === 'structure') {
       window.location.href = '/structure/';
@@ -66,6 +71,8 @@ export function CountryGate() {
         return;
       }
       setCode(country);
+      setCity('');
+      setLocality('');
       setAsk(a);
     };
     window.addEventListener(EVENT, on);
@@ -102,22 +109,25 @@ export function CountryGate() {
         >
           <p className="gate-tag">{tag}</p>
           <h2 id="gate-title">{forPatient ? 'Dans quel pays souhaitez-vous consulter ?' : 'Dans quel pays exercez-vous ?'}</h2>
-          <select value={code} onChange={(e) => setCode(e.target.value)} required autoFocus>
+          <select value={code} onChange={(e) => { setCode(e.target.value); setCity(''); setLocality(''); }} required autoFocus aria-label="Pays">
             <option value="">Choisir le pays</option>
             {countries.map((c) => <option key={c.code} value={c.code}>{flag(c.code)} {c.nameFr}</option>)}
           </select>
+          {forPatient ? (
+            <PlaceFields country={code} city={city} locality={locality} onChange={(c, l) => { setCity(c); setLocality(l); }} />
+          ) : null}
           <button className="btn" disabled={!code}>Continuer</button>
           <button type="button" className="btn ghost" onClick={close}>Annuler</button>
           {forPatient && !user ? <p className="muted small">Vous vous connecterez ensuite pour voir les disponibilités.</p> : null}
         </form>
       ) : (
         <div className="modal card stack gate-choice">
-          <p className="gate-tag">{flag(code)} {name}</p>
+          <p className="gate-tag">{flag(code)} {[locality, city, name].filter(Boolean).join(', ')}</p>
           <h2 id="gate-title">Vous souhaitez consulter</h2>
-          <button type="button" className="choice-card doctor" onClick={() => { close(); openAsPatient(href('recherche', { pays: code }), !!user); }}>
+          <button type="button" className="choice-card doctor" onClick={() => { close(); openAsPatient(href('recherche', { pays: code, ...where() }), !!user); }}>
             <strong>Un médecin</strong>
           </button>
-          <button type="button" className="choice-card structure" onClick={() => { close(); openAsPatient(href('structures', { pays: code }), !!user); }}>
+          <button type="button" className="choice-card structure" onClick={() => { close(); openAsPatient(href('structures', { pays: code, ...where() }), !!user); }}>
             <strong>Une structure de santé</strong>
             <span className="choice-sub">Clinique, hôpital, cabinet</span>
           </button>

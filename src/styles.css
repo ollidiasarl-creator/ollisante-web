@@ -239,7 +239,7 @@ a.price-card:hover { border-color: var(--green); }
 /* ---------- résultats et fiches ---------- */
 .page { padding: 28px 0 56px; }
 .page h1 { font-size: 28px; }
-.filters { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end; margin: 16px 0 22px; }
+.filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; align-items: end; margin: 16px 0 22px; }
 @media (max-width: 860px) { .filters { grid-template-columns: 1fr; } }
 .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
 .result { display: grid; grid-template-columns: minmax(240px, 1fr) 2fr; gap: 18px; }

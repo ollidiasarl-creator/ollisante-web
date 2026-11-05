@@ -6,22 +6,34 @@ import { Field, useCountries } from './components';
 import { flag } from './format';
 import { go, href } from './router';
 import { useLockedCountry } from './brand';
+import { PlaceFields } from './Places';
 
-/** Pays, spécialité et nom : chaque changement met aussitôt les résultats à jour (le nom, après une courte pause dans la frappe). */
-export function SearchForm({ initial, className }: {
-  initial?: { pays?: string; specialite?: string; q?: string }; className: string;
+/**
+ * Pays, ville, localité, spécialité et nom : chaque changement met aussitôt les résultats à jour (le nom, après une
+ * courte pause dans la frappe). {@code page} : « recherche » (médecins) ou « structures ».
+ */
+export function SearchForm({ initial, className, page = 'recherche' }: {
+  initial?: { pays?: string; ville?: string; localite?: string; specialite?: string; q?: string }; className: string;
+  page?: 'recherche' | 'structures';
 }) {
   const countries = useCountries();
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
   const locked = useLockedCountry();
   const pays = locked ?? initial?.pays ?? '';
   const specialite = initial?.specialite ?? '';
+  const ville = initial?.ville ?? '';
+  const localite = initial?.localite ?? '';
+  const doctors = page === 'recherche';
   const [q, setQ] = useState(initial?.q ?? '');
   useEffect(() => {
     getSpecialties().then((l) => setSpecialties([...l].sort((a, b) => a.nameFr.localeCompare(b.nameFr, 'fr')))).catch(() => undefined);
   }, []);
-  const apply = (next: { pays?: string; specialite?: string; q?: string }) =>
-    go('recherche', { pays, specialite, q: q.trim(), ...next });
+  const apply = (next: { pays?: string; ville?: string; localite?: string; specialite?: string; q?: string }) => {
+    const all = { pays, ville, localite, specialite, q: q.trim(), ...next };
+    // Un autre pays : la ville et la localité ne s'y appliquent plus.
+    if (next.pays !== undefined && next.pays !== pays) Object.assign(all, { ville: '', localite: '' });
+    go(page, doctors ? all : { pays: all.pays, ville: all.ville, localite: all.localite });
+  };
   // Le nom : on attend que la personne s'arrête de taper avant de relancer la recherche.
   useEffect(() => {
     if (q.trim() === (initial?.q ?? '')) return;
@@ -42,6 +54,8 @@ export function SearchForm({ initial, className }: {
           {countries.map((c) => <option key={c.code} value={c.code}>{flag(c.code)} {c.nameFr}</option>)}
         </select>
       </Field>
+      <PlaceFields country={pays} city={ville} locality={localite} onChange={(c, l) => apply({ ville: c, localite: l })} />
+      {doctors ? <>
       <Field label="Spécialité">
         <select value={specialite} onChange={(e) => apply({ specialite: e.target.value })}>
           <option value="">Toutes les spécialités</option>
@@ -52,6 +66,7 @@ export function SearchForm({ initial, className }: {
         <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ex. Diop" type="search" />
       </Field>
       <button className="btn">Rechercher</button>
+      </> : null}
     </form>
   );
 }

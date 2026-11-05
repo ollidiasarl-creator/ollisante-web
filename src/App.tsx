@@ -78,7 +78,7 @@ export default function App() {
   }
   else if (first === 'recherche') page = <Search query={route.query} />;
   else if (first === 'patient') page = <PatientChoice />;
-  else if (first === 'structures') page = <Structures pays={route.query.get('pays') ?? ''} />;
+  else if (first === 'structures') page = <Structures pays={route.query.get('pays') ?? ''} ville={route.query.get('ville') ?? ''} localite={route.query.get('localite') ?? ''} />;
   else if (first === 'resultats') page = <Results q={route.query.get('q') ?? ''} />;
   else if (first === 'medecin' && second) page = <PractitionerPage id={second} />;
   else if (first === 'structure' && second) page = <FacilityPage id={second} />;

@@ -12,6 +12,8 @@ export default function Search({ query }: { query: URLSearchParams }) {
   const locked = useLockedCountry();
   const pays = locked ?? query.get('pays') ?? '';
   const specialite = query.get('specialite') ?? '';
+  const ville = query.get('ville') ?? '';
+  const localite = query.get('localite') ?? '';
   const q = query.get('q') ?? '';
   const countries = useCountries();
   const [country, setCountry] = useCountry();
@@ -25,28 +27,32 @@ export default function Search({ query }: { query: URLSearchParams }) {
   useEffect(() => {
     setPage(0);
     setAllFacilities(false);
-  }, [pays, specialite, q]);
-  const list = useLoad(() => searchPractitioners({ countryCode: pays, specialty: specialite, q, page }), [pays, specialite, q, page]);
+  }, [pays, ville, localite, specialite, q]);
+  const list = useLoad(() => searchPractitioners({ countryCode: pays, city: ville, locality: localite, specialty: specialite, q, page }),
+    [pays, ville, localite, specialite, q, page]);
+  // Toutes les structures du pays (pour les créneaux) ; la section « Structures » ne montre que celles du lieu choisi.
   const facilities = useLoad(() => getFacilities(pays || undefined), [pays]);
   const total = list.data?.totalElements ?? 0;
   const place = countries.find((c) => c.code === pays);
-  const shownFacilities = (facilities.data ?? []).slice(0, allFacilities ? undefined : 6);
+  const here = (facilities.data ?? []).filter((f) => same(ville, f.city) && same(localite, f.locality));
+  const shownFacilities = here.slice(0, allFacilities ? undefined : 6);
+  const where = [localite, ville].filter(Boolean).join(', ');
 
   return (
     <div className="page">
       <div className="wrap">
-        <h1>{place ? <>{flag(place.code)} Santé · {place.nameFr}</> : 'Trouver un professionnel de santé'}</h1>
+        <h1>{place ? <>{flag(place.code)} Santé · {place.nameFr}{where ? ` · ${where}` : ''}</> : 'Trouver un professionnel de santé'}</h1>
         <p className="muted">
           {place
             ? 'Médecins et structures de santé vérifiés. Connectez-vous pour voir les disponibilités et réserver.'
             : 'Tous les pays. Choisissez un pays pour voir aussi ses structures de santé.'}
         </p>
-        <SearchForm key={`${pays}|${specialite}`} initial={{ pays, specialite, q }} className="filters" />
+        <SearchForm key={`${pays}|${ville}|${localite}|${specialite}`} initial={{ pays, ville, localite, specialite, q }} className="filters" />
         <ErrorBox text={list.error} />
         {list.loading && !list.data ? <div className="spinner" aria-label="Chargement" /> : null}
         {list.data ? <p className="muted" style={{ marginBottom: 12 }}>{total} professionnel{total > 1 ? 's' : ''} trouvé{total > 1 ? 's' : ''}</p> : null}
         {list.data && list.data.content.length === 0 ? (
-          <div className="empty-state card">Aucun professionnel ne correspond à cette recherche. Essayez un autre pays ou une autre spécialité.</div>
+          <div className="empty-state card">Aucun professionnel ne correspond à cette recherche. Essayez {where ? 'une autre ville ou localité' : 'un autre pays'} ou une autre spécialité.</div>
         ) : null}
         <div className="stack">
           {(list.data?.content ?? []).map((p) => (
@@ -62,18 +68,18 @@ export default function Search({ query }: { query: URLSearchParams }) {
         ) : null}
         {pays && !specialite && !q && shownFacilities.length ? (
           <section className="facility-section">
-            <h2>Structures de santé{place ? ` · ${place.nameFr}` : ''}</h2>
+            <h2>Structures de santé{where ? ` · ${where}` : place ? ` · ${place.nameFr}` : ''}</h2>
             <div className="facility-grid">
               {shownFacilities.map((f) => (
                 <a key={f.id} className="card facility-card" href={href(`structure/${f.id}`)}>
                   <strong>{f.name}</strong>
-                  <span className="muted small">{[f.address, f.city].filter(Boolean).join(', ') || place?.nameFr}</span>
+                  <span className="muted small">{[f.address, f.locality, f.city].filter(Boolean).join(', ') || place?.nameFr}</span>
                 </a>
               ))}
             </div>
-            {!allFacilities && (facilities.data?.length ?? 0) > 6 ? (
+            {!allFacilities && here.length > 6 ? (
               <button type="button" className="btn secondary small" onClick={() => setAllFacilities(true)}>
-                Voir les {facilities.data!.length} structures
+                Voir les {here.length} structures
               </button>
             ) : null}
           </section>
@@ -108,4 +114,10 @@ export function PractitionerResult({ p, facilities, facilityId }: {
       )}
     </article>
   );
+}
+
+/** Même lieu, sans tenir compte des majuscules ni des accents ; pas de filtre → toujours vrai. */
+function same(wanted: string, value: string | null) {
+  const k = (x: string) => x.normalize('NFD').replace(/\p{M}/gu, '').trim().toLowerCase();
+  return !wanted || k(wanted) === k(value ?? '');
 }
