@@ -94,8 +94,7 @@ function Chevron() {
 
 /** Accueil : les trois profils comme dans l'application, la recherche, les actualités du pays et le téléchargement. */
 /** `light` : variante aérée (titre et recherche, profils, spécialités en pastilles, engagements en une ligne, actualités). */
-/** {@code listDemo} : démo des médecins disponibles en fiches en ligne (adresse #/demo-liste). */
-export default function Home({ light = false, listDemo = false }: { light?: boolean; listDemo?: boolean }) {
+export default function Home({ light = false }: { light?: boolean }) {
   const countries = useCountries();
   const [country, setCountry] = useCountry();
   const user = useSession();
@@ -174,7 +173,7 @@ export default function Home({ light = false, listDemo = false }: { light?: bool
         </a>
       </section>
 
-      {SHOWCASE || light ? null : <AvailableNow country={country} list={listDemo} />}
+      {SHOWCASE || light ? null : <AvailableNow country={country} list />}
 
       {SHOWCASE ? null : light ? (
         <section className="section light-section">
