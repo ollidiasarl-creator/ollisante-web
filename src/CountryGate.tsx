@@ -26,9 +26,9 @@ export function askProfile(profile: Profile) {
 }
 
 /** Ouvre la page voulue, en passant par la connexion patient si besoin. */
-function openAsPatient(target: string, signedIn: boolean) {
-  if (signedIn) window.location.hash = target;
-  else go('connexion/patient', { suite: target });
+function openAsPatient(target: string, _signedIn: boolean) {
+  // Médecins, structures et horaires sont visibles de tous : la connexion n'est demandée qu'à la réservation.
+  window.location.hash = target;
 }
 
 const TAG: Record<Profile, string> = { patient: 'Patient', medecin: 'Médecin', structure: 'Structure' };
@@ -118,7 +118,7 @@ export function CountryGate() {
           ) : null}
           <button className="btn" disabled={!code}>Continuer</button>
           <button type="button" className="btn ghost" onClick={close}>Annuler</button>
-          {forPatient && !user ? <p className="muted small">Vous vous connecterez ensuite pour voir les disponibilités.</p> : null}
+          {forPatient && !user ? <p className="muted small">Les horaires libres s’affichent aussitôt ; la connexion n’est demandée que pour réserver.</p> : null}
         </form>
       ) : (
         <div className="modal card stack gate-choice">

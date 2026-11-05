@@ -3,14 +3,14 @@ import { Slot, getFacilities, getPractitioner } from '../api';
 import { Agenda, ErrorBox } from '../components';
 import { flag, initials, money } from '../format';
 import { useLoad, useSession } from '../hooks';
-import { LoginToBook } from '../LoginToBook';
-import { go, href } from '../router';
+import { GuestBookingNote, bookSlot } from '../LoginToBook';
+import { href } from '../router';
 
 export default function PractitionerPage({ id }: { id: string }) {
   const user = useSession();
   const p = useLoad(() => getPractitioner(id), [id]);
   const facilities = useLoad(() => (p.data ? getFacilities(p.data.countryCode) : Promise.resolve([])), [p.data?.countryCode]);
-  const pick = (s: Slot) => go(`rdv/${id}`, { creneau: s.startsAt });
+  const pick = (s: Slot) => bookSlot(id, s.startsAt, !!user);
 
   if (p.error) return <div className="page"><div className="wrap"><ErrorBox text="Ce professionnel n’est pas (ou plus) disponible sur Ollisanté." /></div></div>;
   if (!p.data) return <div className="page"><div className="spinner" /></div>;
@@ -36,11 +36,8 @@ export default function PractitionerPage({ id }: { id: string }) {
           </div>
           <div className="card">
             <h2 style={{ fontSize: 20, marginBottom: 12 }}>Prendre rendez-vous</h2>
-            {user ? (
-              <Agenda practitionerId={id} days={7} perDay={8} facilities={facilities.data ?? []} onPick={pick} />
-            ) : (
-              <LoginToBook practitionerId={id} />
-            )}
+            <Agenda practitionerId={id} days={7} perDay={8} facilities={facilities.data ?? []} onPick={pick} />
+            {user ? null : <GuestBookingNote />}
           </div>
         </div>
       </div>

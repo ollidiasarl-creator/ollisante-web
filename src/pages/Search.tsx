@@ -4,8 +4,8 @@ import { useCountry, useLockedCountry } from '../brand';
 import { Agenda, ErrorBox, useCountries } from '../components';
 import { flag, initials, money } from '../format';
 import { useLoad, useSession } from '../hooks';
-import { LoginToBook } from '../LoginToBook';
-import { go, href } from '../router';
+import { GuestBookingNote, bookSlot } from '../LoginToBook';
+import { href } from '../router';
 import { SearchForm } from '../SearchForm';
 
 export default function Search({ query }: { query: URLSearchParams }) {
@@ -44,7 +44,7 @@ export default function Search({ query }: { query: URLSearchParams }) {
         <h1>{place ? <>{flag(place.code)} Santé · {place.nameFr}{where ? ` · ${where}` : ''}</> : 'Trouver un professionnel de santé'}</h1>
         <p className="muted">
           {place
-            ? 'Médecins et structures de santé vérifiés. Connectez-vous pour voir les disponibilités et réserver.'
+            ? 'Médecins et structures de santé vérifiés. Choisissez un horaire pour réserver.'
             : 'Tous les pays. Choisissez un pays pour voir aussi ses structures de santé.'}
         </p>
         <SearchForm key={`${pays}|${ville}|${localite}|${specialite}`} initial={{ pays, ville, localite, specialite, q }} className="filters" />
@@ -94,7 +94,7 @@ export function PractitionerResult({ p, facilities, facilityId }: {
 }) {
   const user = useSession();
   const countries = useCountries();
-  const pick = (s: Slot) => go(`rdv/${p.id}`, { creneau: s.startsAt });
+  const pick = (s: Slot) => bookSlot(p.id, s.startsAt, !!user);
   return (
     <article className="card result">
       <div className="who">
@@ -107,11 +107,10 @@ export function PractitionerResult({ p, facilities, facilityId }: {
           <a className="small" href={href(`medecin/${p.id}`)}>Voir le profil</a>
         </div>
       </div>
-      {user ? (
+      <div>
         <Agenda practitionerId={p.id} days={5} perDay={4} facilityId={facilityId} facilities={facilities} onPick={pick} />
-      ) : (
-        <LoginToBook practitionerId={p.id} />
-      )}
+        {user ? null : <GuestBookingNote />}
+      </div>
     </article>
   );
 }

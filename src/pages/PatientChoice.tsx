@@ -4,7 +4,7 @@ import { useCountry, useLockedCountry } from '../brand';
 import { useCountries } from '../components';
 import { flag } from '../format';
 import { useSession } from '../hooks';
-import { go, href } from '../router';
+import { href } from '../router';
 
 /**
  * Patient : on choisit son pays, puis de consulter un médecin ou une structure de santé (avec le nombre disponible
@@ -31,9 +31,9 @@ export default function PatientChoice() {
   }, [pays]);
 
   const name = countries.find((c) => c.code === pays)?.nameFr ?? '';
+  // Médecins, structures et horaires sont visibles de tous : la connexion n'est demandée qu'à la réservation.
   function choose(target: string) {
-    if (user) window.location.hash = target;
-    else go('connexion/patient', { suite: target });
+    window.location.hash = target;
   }
   const plural = (n: number, one: string, many: string) => `${n} ${n > 1 ? many : one}`;
 
@@ -65,7 +65,7 @@ export default function PatientChoice() {
             <span className="choice-sub">{pays && counts ? `${plural(counts.structures, 'structure', 'structures')} · ${name}` : 'Clinique, hôpital, cabinet'}</span>
           </button>
         </div>
-        {user ? null : <p className="muted small">Vous vous connecterez ensuite pour voir les disponibilités et réserver.</p>}
+        {user ? null : <p className="muted small">Les horaires libres s’affichent aussitôt ; la connexion n’est demandée que pour réserver.</p>}
       </div>
     </div>
   );

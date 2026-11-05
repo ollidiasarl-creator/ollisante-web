@@ -67,7 +67,7 @@ export default function App() {
   const [first, second] = route.path;
 
   // Chercher un professionnel, voir sa fiche ou celle d'une structure est libre ; seuls réserver et le compte demandent d'être connecté.
-  const needsLogin = !user && ['rdv', 'compte', 'structures'].includes(first);
+  const needsLogin = !user && ['rdv', 'compte'].includes(first);
 
   let page;
   if (SHOWCASE && ['recherche', 'medecin', 'structure', 'rdv', 'compte', 'tarifs', 'bientot'].includes(first)) page = <ComingSoon />;
@@ -90,7 +90,7 @@ export default function App() {
   else if (first === 'orientation') page = <Triage />;
   else if (first === 'professionnels') page = <ProInfo profile={second === 'structure' ? 'structure' : 'medecin'} />;
   else if (first === 'aide' || first === 'faq') page = <Faq openId={route.query.get('question')} />;
-  else page = <Home light={first === 'apercu'} availability={first === 'demo-dispo'} />;
+  else page = <Home light={first === 'apercu'} />;
 
   if (needsLogin || first === 'connexion') {
     return (

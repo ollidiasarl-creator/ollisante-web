@@ -4,7 +4,8 @@ import { askProfile } from './CountryGate';
 import { useCountries } from './components';
 import { addDays, flag, initials, isoDate, money, time } from './format';
 import { useSession } from './hooks';
-import { go, href } from './router';
+import { href } from './router';
+import { bookSlot } from './LoginToBook';
 
 /** Spécialités proposées en raccourci au-dessus des disponibilités. */
 const QUICK = [
@@ -60,11 +61,7 @@ export function AvailableNow({ country }: { country: string }) {
     };
   }, [country, spec]);
 
-  const book = (p: Practitioner, s: Slot) => {
-    const target = href(`rdv/${p.id}`, { creneau: s.startsAt });
-    if (user) go(`rdv/${p.id}`, { creneau: s.startsAt });
-    else go('connexion/patient', { suite: target });
-  };
+  const book = (p: Practitioner, s: Slot) => bookSlot(p.id, s.startsAt, !!user);
   const place = countries.find((c) => c.code === country);
 
   return (

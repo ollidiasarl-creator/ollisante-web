@@ -14,3 +14,18 @@ export function LoginToBook({ practitionerId }: { practitionerId: string }) {
     </div>
   );
 }
+
+/**
+ * Choix d'un horaire : les créneaux sont visibles de tous ; un visiteur se connecte (ou crée son compte)
+ * puis arrive directement sur la réservation de cet horaire.
+ */
+export function bookSlot(practitionerId: string, startsAt: string, signedIn: boolean) {
+  const target = href(`rdv/${practitionerId}`, { creneau: startsAt });
+  if (signedIn) window.location.hash = target;
+  else window.location.hash = href('connexion/patient', { suite: target });
+}
+
+/** Sous les créneaux, pour un visiteur : la réservation se confirme après connexion. */
+export function GuestBookingNote() {
+  return <p className="muted small guest-note">Choisissez un horaire : vous vous connecterez (ou créerez votre compte gratuit) pour confirmer.</p>;
+}

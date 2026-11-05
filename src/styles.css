@@ -737,3 +737,4 @@ button.res-item:hover { border-color: var(--green); }
 .avail-more { align-self: center; font-weight: 700; }
 @media (max-width: 520px) { .avail-grid { grid-template-columns: 1fr; } }
 .avail-day .slot.empty { text-align: center; background: transparent; }
+.guest-note { margin: 8px 0 0; }
