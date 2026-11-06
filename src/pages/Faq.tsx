@@ -22,7 +22,7 @@ export default function Faq({ openId }: { openId?: string | null }) {
           {whatsapp ? (
             <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noreferrer">Écrivez-nous sur WhatsApp</a>
           ) : (
-            <a href="mailto:donnees@ollidia.com">Écrivez-nous</a>
+            <a href="mailto:info@ollidia.com">Écrivez-nous</a>
           )}
           . En cas d’urgence, <a href={href('urgence')}>appelez le numéro d’urgence de votre pays</a>.
         </div>

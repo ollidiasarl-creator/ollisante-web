@@ -11,7 +11,7 @@ export default function ComingSoon() {
         <p className="lead-text">La prise de rendez-vous en ligne sera très prochainement disponible dans votre pays.</p>
         <p className="muted">
           Vous êtes un professionnel ou une structure de santé ?{' '}
-          <a href="mailto:donnees@ollidia.com">Écrivez-nous</a> pour rejoindre Ollisanté dès l’ouverture.
+          <a href="mailto:info@ollidia.com">Écrivez-nous</a> pour rejoindre Ollisanté dès l’ouverture.
         </p>
         <a className="btn" href={href('')}>Retour à l’accueil</a>
       </div>
