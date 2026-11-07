@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import emblem from './emblem.png';
+import oldEmblem from './emblem.png';
+import newEmblem from './logo-mark.svg';
 
 /**
  * Vitrine (réservation, comptes et tarifs remplacés par « Ollisanté ouvre bientôt ») : désactivée, le site complet
@@ -11,9 +12,38 @@ export const SHOWCASE = new URLSearchParams(window.location.search).has('vitrine
 export const APP_STORE_URL = 'https://apps.apple.com/app/id6822455067';
 export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.ollisante.app';
 
-/** Signature visuelle : le O à la carte de l'Afrique, comme en haut à gauche de chaque écran de l'application. */
+/**
+ * Démo du nouveau logo « L'accueil » : visible seulement avec le lien ollisante.com/?logo=c (mémorisé le temps de la
+ * visite) ; « ?logo=actuel » revient au logo actuel. Les autres visiteurs voient le logo actuel.
+ */
+export const NEW_LOGO = (() => {
+  const asked = new URLSearchParams(window.location.search).get('logo');
+  try {
+    if (asked === 'c') sessionStorage.setItem('ollisante-logo', 'c');
+    if (asked === 'actuel') sessionStorage.removeItem('ollisante-logo');
+    return sessionStorage.getItem('ollisante-logo') === 'c';
+  } catch {
+    return asked === 'c';
+  }
+})();
+const emblem = NEW_LOGO ? newEmblem : oldEmblem;
+if (NEW_LOGO) {
+  const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+  if (icon) {
+    icon.type = 'image/svg+xml';
+    icon.href = newEmblem;
+  }
+}
+
+/** Signature visuelle : le O à la carte de l'Afrique (ou, en démo, le cercle ouvert et le point doré). */
 export function Emblem({ size = 40, id }: { size?: number; id?: string }) {
-  return <img id={id} src={emblem} alt="" width={size} height={size} className="emblem" />;
+  return <img id={id} src={emblem} alt="" width={size} height={size} className={NEW_LOGO ? 'emblem emblem-c' : 'emblem'} />;
+}
+
+/** Le nom : en démo du nouveau logo, « Olli » en bleu nuit et « santé » en vert. */
+export function Wordmark() {
+  if (!NEW_LOGO) return <span>Ollisanté</span>;
+  return <span className="wordmark"><span className="wm-olli">Olli</span><span className="wm-sante">santé</span></span>;
 }
 
 // ---------- Pays choisi (mémorisé dans le navigateur, partagé entre l'en-tête et les pages) ----------
@@ -158,7 +188,7 @@ export function OpeningSplash({ targetId }: { targetId: string }) {
         ref={mark}
         src={emblem}
         alt=""
-        className="splash-mark"
+        className={NEW_LOGO ? 'splash-mark splash-c' : 'splash-mark'}
         style={{ transform }}
         onTransitionEnd={() => setPhase('done')}
       />

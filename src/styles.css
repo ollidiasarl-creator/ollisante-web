@@ -808,3 +808,9 @@ button.res-item:hover { border-color: var(--green); }
   .recap-table { min-width: 520px; }
   .recap-table tbody th { min-width: 140px; position: sticky; left: 0; background: #fff; }
 }
+
+/* ---------- Démo du logo « L'accueil » (?logo=c) ---------- */
+.emblem.emblem-c, .splash-mark.splash-c { border-radius: 0; }
+.wordmark { font-weight: 800; letter-spacing: -0.015em; }
+.wordmark .wm-olli { color: var(--navy, #0f2a47); }
+.wordmark .wm-sante { color: var(--green, #176b50); }

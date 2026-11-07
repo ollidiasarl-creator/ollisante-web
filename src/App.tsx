@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { PROFILE_EVENT, Profile, getAppConfig, getProfile, logout, profileName, updateProfile } from './api';
-import { Emblem, OpeningSplash, SHOWCASE, StoreBadges, setLockedCountry, useCountry, useLockedCountry } from './brand';
+import { Emblem, OpeningSplash, SHOWCASE, StoreBadges, setLockedCountry, useCountry, useLockedCountry, Wordmark } from './brand';
 import { useCountries } from './components';
 import { flag } from './format';
 import { FooterHelp } from './HelpMenu';
@@ -119,7 +119,7 @@ export default function App() {
         <div className="wrap">
           <a href={href('')} className="brand" aria-label="Ollisanté, accueil">
             <Emblem id="header-emblem" size={36} />
-            <span>Ollisanté</span>
+            <Wordmark />
           </a>
           {locked ? (
             <span className="country-pill fixed" title="Pays de votre compte">
@@ -157,7 +157,7 @@ export default function App() {
       <footer className="foot">
         <div className="wrap cols">
           <div className="stack">
-            <a href={href('')} className="brand" aria-label="Ollisanté, accueil"><Emblem size={32} /><span>Ollisanté</span></a>
+            <a href={href('')} className="brand" aria-label="Ollisanté, accueil"><Emblem size={32} /><Wordmark /></a>
             <p className="muted small">Prenez rendez-vous avec des professionnels et des structures de santé vérifiés, en Afrique et en Europe.</p>
             <StoreBadges />
             {whatsapp ? <p className="small">Assistance WhatsApp{config.data?.whatsappHours ? ` : ${config.data.whatsappHours}` : ''}</p> : null}
