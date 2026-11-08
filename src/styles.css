@@ -827,3 +827,16 @@ html.logo-c .triage-link { color: var(--green, #176b50); }
 html.logo-c .hero-band .searchbar { box-shadow: 0 0 0 1px #cfe3d9, 0 14px 30px rgba(15, 42, 71, 0.10); }
 html.logo-c .top nav a.btn.app-btn { background: transparent; color: var(--green, #176b50); box-shadow: inset 0 0 0 1.5px var(--green, #176b50); }
 html.logo-c .top nav a.btn.app-btn:hover { background: #eef7f2; }
+
+/* Démo ?logo=c : logo collé au nom ; blocs Patient / Médecin / Structure en teinte claire de leur couleur. */
+html.logo-c .brand { gap: 3px; }
+html.logo-c .profile-tile { box-shadow: none; border: 1.5px solid transparent; }
+html.logo-c .profile-tile.patient { background: #e6f2ec; border-color: #c4e0d2; color: var(--green, #176b50); }
+html.logo-c .profile-tile.practitioner { background: #e8edf4; border-color: #cbd6e4; color: var(--navy, #0f2a47); }
+html.logo-c .profile-tile.structure { background: #fbf1de; border-color: #f0dcb2; color: var(--navy, #0f2a47); }
+html.logo-c .profile-tile .tile-text span { color: #3d5263; opacity: 1; }
+html.logo-c .profile-tile .tile-icon { color: #ffffff; }
+html.logo-c .profile-tile.patient .tile-icon { background: var(--green, #176b50); }
+html.logo-c .profile-tile.practitioner .tile-icon { background: var(--navy, #0f2a47); }
+html.logo-c .profile-tile.structure .tile-icon { background: var(--gold, #d9a441); color: var(--navy, #0f2a47); }
+html.logo-c .profile-tile:hover { box-shadow: 0 8px 20px rgba(15, 42, 71, 0.08); }
