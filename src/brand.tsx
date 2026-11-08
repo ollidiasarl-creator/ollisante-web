@@ -28,6 +28,8 @@ export const NEW_LOGO = (() => {
 })();
 const emblem = NEW_LOGO ? newEmblem : oldEmblem;
 if (NEW_LOGO) {
+  // Démo : couleurs plus claires (moins de vert foncé) sur tout le site.
+  document.documentElement.classList.add('logo-c');
   const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
   if (icon) {
     icon.type = 'image/svg+xml';

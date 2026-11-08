@@ -146,7 +146,7 @@ export default function App() {
             {SHOWCASE || user?.user.role === 'PRACTITIONER' ? null : (
               <button type="button" className="btn small book-btn" onClick={() => askProfile('patient')}><span className="long-label">Prendre rendez-vous</span><span className="short-label">RDV</span></button>
             )}
-            <a href={href('application')} className="btn small hide-sm"><span className="long-label">Télécharger l’application</span><span className="short-label">L’application</span></a>
+            <a href={href('application')} className="btn small hide-sm app-btn"><span className="long-label">Télécharger l’application</span><span className="short-label">L’application</span></a>
           </nav>
         </div>
       </header>

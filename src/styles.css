@@ -814,3 +814,16 @@ button.res-item:hover { border-color: var(--green); }
 .wordmark { font-weight: 800; letter-spacing: -0.015em; }
 .wordmark .wm-olli { color: var(--navy, #0f2a47); }
 .wordmark .wm-sante { color: var(--green, #176b50); }
+
+/* ---------- Démo ?logo=c : moins de vert foncé ---------- */
+html.logo-c .hero-band { background: linear-gradient(180deg, #eef7f2 0%, #e2f0e9 100%); color: var(--navy, #0f2a47); }
+html.logo-c .hero-band h1 { color: var(--navy, #0f2a47); }
+html.logo-c .hero-band h1 em { color: var(--green, #176b50); }
+html.logo-c .hero-band .lead { opacity: 1; color: #3d5263; }
+html.logo-c .hero-points svg { background: #ffffff; color: var(--green, #176b50); box-shadow: 0 0 0 1px #cfe3d9; }
+html.logo-c .hero-stats dt { color: var(--green, #176b50); }
+html.logo-c .hero-stats dd { opacity: 1; color: #3d5263; }
+html.logo-c .triage-link { color: var(--green, #176b50); }
+html.logo-c .hero-band .searchbar { box-shadow: 0 0 0 1px #cfe3d9, 0 14px 30px rgba(15, 42, 71, 0.10); }
+html.logo-c .top nav a.btn.app-btn { background: transparent; color: var(--green, #176b50); box-shadow: inset 0 0 0 1.5px var(--green, #176b50); }
+html.logo-c .top nav a.btn.app-btn:hover { background: #eef7f2; }
