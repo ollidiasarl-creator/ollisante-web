@@ -840,3 +840,8 @@ html.logo-c .profile-tile.patient .tile-icon { background: var(--green, #176b50)
 html.logo-c .profile-tile.practitioner .tile-icon { background: var(--navy, #0f2a47); }
 html.logo-c .profile-tile.structure .tile-icon { background: var(--gold, #d9a441); color: var(--navy, #0f2a47); }
 html.logo-c .profile-tile:hover { box-shadow: 0 8px 20px rgba(15, 42, 71, 0.08); }
+
+/* Démo ?logo=c : un seul logo — le cercle fait le « O » de « Ollisanté ». */
+html.logo-c .brand { gap: 1px; align-items: center; }
+html.logo-c .brand .wordmark { font-size: 27px; line-height: 1; letter-spacing: -0.02em; transform: translateY(1px); }
+html.logo-c .foot .brand .wordmark { font-size: 24px; }

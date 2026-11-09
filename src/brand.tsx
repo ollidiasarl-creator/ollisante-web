@@ -45,7 +45,8 @@ export function Emblem({ size = 40, id }: { size?: number; id?: string }) {
 /** Le nom : en démo du nouveau logo, « Olli » en bleu nuit et « santé » en vert. */
 export function Wordmark() {
   if (!NEW_LOGO) return <span>Ollisanté</span>;
-  return <span className="wordmark"><span className="wm-olli">Olli</span><span className="wm-sante">santé</span></span>;
+  // Le cercle (Emblem, juste avant) fait office de « O » : le nom continue avec « llisanté ».
+  return <span className="wordmark" aria-hidden="true"><span className="wm-olli">lli</span><span className="wm-sante">santé</span></span>;
 }
 
 // ---------- Pays choisi (mémorisé dans le navigateur, partagé entre l'en-tête et les pages) ----------
