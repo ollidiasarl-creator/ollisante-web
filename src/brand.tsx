@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import oldEmblem from './emblem.png';
 import newEmblem from './logo-mark.svg';
 
 /**
@@ -12,30 +11,11 @@ export const SHOWCASE = new URLSearchParams(window.location.search).has('vitrine
 export const APP_STORE_URL = 'https://apps.apple.com/app/id6822455067';
 export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.ollisante.app';
 
-/**
- * Démo du nouveau logo « L'accueil » : visible seulement avec le lien ollisante.com/?logo=c (mémorisé le temps de la
- * visite) ; « ?logo=actuel » revient au logo actuel. Les autres visiteurs voient le logo actuel.
- */
-export const NEW_LOGO = (() => {
-  const asked = new URLSearchParams(window.location.search).get('logo');
-  try {
-    if (asked === 'c') sessionStorage.setItem('ollisante-logo', 'c');
-    if (asked === 'actuel') sessionStorage.removeItem('ollisante-logo');
-    return sessionStorage.getItem('ollisante-logo') === 'c';
-  } catch {
-    return asked === 'c';
-  }
-})();
-const emblem = NEW_LOGO ? newEmblem : oldEmblem;
-if (NEW_LOGO) {
-  // Démo : couleurs plus claires (moins de vert foncé) sur tout le site.
-  document.documentElement.classList.add('logo-c');
-  const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
-  if (icon) {
-    icon.type = 'image/svg+xml';
-    icon.href = newEmblem;
-  }
-}
+/** Logo « L'accueil » (validé le 9 novembre 2026) : le cercle ouvert et le point doré font le « O » d'Ollisanté. */
+export const NEW_LOGO = true;
+const emblem = newEmblem;
+// Couleurs claires du nouveau logo (moins de vert foncé), appliquées à tout le site.
+document.documentElement.classList.add('logo-c');
 
 /** Signature visuelle : le O à la carte de l'Afrique (ou, en démo, le cercle ouvert et le point doré). */
 export function Emblem({ size = 40, id }: { size?: number; id?: string }) {
