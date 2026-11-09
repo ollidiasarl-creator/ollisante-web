@@ -17,20 +17,8 @@ const emblem = newEmblem;
 // Couleurs claires du nouveau logo (moins de vert foncé), appliquées à tout le site.
 document.documentElement.classList.add('logo-c');
 
-/**
- * Démo « fond blanc » : visible seulement avec le lien ollisante.com/?theme=blanc (mémorisé le temps de la visite) ;
- * « ?theme=actuel » revient à la version en ligne. Les autres visiteurs ne voient aucun changement.
- */
-export const WHITE_DEMO = (() => {
-  const asked = new URLSearchParams(window.location.search).get('theme');
-  try {
-    if (asked === 'blanc') sessionStorage.setItem('ollisante-theme', 'blanc');
-    if (asked === 'actuel') sessionStorage.removeItem('ollisante-theme');
-    return sessionStorage.getItem('ollisante-theme') === 'blanc';
-  } catch {
-    return asked === 'blanc';
-  }
-})();
+/** Version « fond blanc » (validée le 9 novembre 2026), appliquée à tout le site. L'ancienne version : archives/couleurs-vert-pale-2026-11. */
+export const WHITE_DEMO = true;
 if (WHITE_DEMO) document.documentElement.classList.add('theme-blanc');
 
 /** Signature visuelle : le O à la carte de l'Afrique (ou, en démo, le cercle ouvert et le point doré). */
