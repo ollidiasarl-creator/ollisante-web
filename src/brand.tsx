@@ -17,6 +17,22 @@ const emblem = newEmblem;
 // Couleurs claires du nouveau logo (moins de vert foncé), appliquées à tout le site.
 document.documentElement.classList.add('logo-c');
 
+/**
+ * Démo « fond blanc » : visible seulement avec le lien ollisante.com/?theme=blanc (mémorisé le temps de la visite) ;
+ * « ?theme=actuel » revient à la version en ligne. Les autres visiteurs ne voient aucun changement.
+ */
+export const WHITE_DEMO = (() => {
+  const asked = new URLSearchParams(window.location.search).get('theme');
+  try {
+    if (asked === 'blanc') sessionStorage.setItem('ollisante-theme', 'blanc');
+    if (asked === 'actuel') sessionStorage.removeItem('ollisante-theme');
+    return sessionStorage.getItem('ollisante-theme') === 'blanc';
+  } catch {
+    return asked === 'blanc';
+  }
+})();
+if (WHITE_DEMO) document.documentElement.classList.add('theme-blanc');
+
 /** Signature visuelle : le O à la carte de l'Afrique (ou, en démo, le cercle ouvert et le point doré). */
 export function Emblem({ size = 40, id }: { size?: number; id?: string }) {
   return <img id={id} src={emblem} alt="" width={size} height={size} className={NEW_LOGO ? 'emblem emblem-c' : 'emblem'} />;
