@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
 import { NewsGrid } from '../NewsGrid';
-import { SHOWCASE, useCountry, Emblem, WHITE_DEMO } from '../brand';
+import { SHOWCASE, useCountry } from '../brand';
 import { useCountries } from '../components';
 import { flag } from '../format';
 import { useLoad, useSession } from '../hooks';
@@ -126,12 +126,6 @@ export default function Home({ light = false }: { light?: boolean }) {
       <section className="hero-band">
         <div className="wrap hero-band-grid">
           <div className="hero-copy">
-            {WHITE_DEMO ? (
-              <div className="hero-logo" role="img" aria-label="Ollisanté">
-                <Emblem size={112} />
-                <span className="hero-logo-name"><span className="wm-olli">Olli</span><span className="wm-sante">santé</span></span>
-              </div>
-            ) : null}
             <h1>Votre rendez-vous médical, <em>simplement</em></h1>
             <p className="lead hero-sub">Trouvez un médecin et réservez en ligne, 24 h/24.</p>
             {light ? null : (
