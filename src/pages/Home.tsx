@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
 import { NewsGrid } from '../NewsGrid';
-import { SHOWCASE, useCountry } from '../brand';
+import { IMAGES_DEMO, SHOWCASE, useCountry } from '../brand';
+import imgEquipe from '../assets/illustrations/equipe.png';
+import imgReunion from '../assets/illustrations/reunion.png';
+import imgMedecin from '../assets/illustrations/medecin.jpg';
 import { useCountries } from '../components';
 import { flag } from '../format';
 import { useLoad, useSession } from '../hooks';
@@ -172,6 +175,16 @@ export default function Home({ light = false }: { light?: boolean }) {
         </a>
       </section>
 
+      {IMAGES_DEMO && !light ? (
+        <section className="wrap img-band" aria-label="Des médecins vérifiés">
+          <img src={imgMedecin} alt="" />
+          <div className="img-band-text">
+            <h2>Des médecins vérifiés, près de chez vous</h2>
+            <p>Chaque professionnel est contrôlé par notre équipe avant d’apparaître sur Ollisanté.</p>
+          </div>
+        </section>
+      ) : null}
+
 
       {SHOWCASE ? null : light ? (
         <section className="section light-section">
@@ -224,17 +237,24 @@ export default function Home({ light = false }: { light?: boolean }) {
       {light ? null : (<>
       <section className="section how-section">
         <div className="wrap">
+          <div className={IMAGES_DEMO ? 'img-split' : undefined}>
+          <div>
           <h2>Comment ça marche ?</h2>
           <ol className="how">
             {HOW.map((h, i) => (
               <li key={h}><span className="num">{i + 1}</span><strong>{h}</strong></li>
             ))}
           </ol>
+          </div>
+          {IMAGES_DEMO ? <img className="img-illu" src={imgReunion} alt="" /> : null}
+          </div>
         </div>
       </section>
 
       <section className="section promise-section">
         <div className="wrap">
+          <div className={IMAGES_DEMO ? 'img-split reverse' : undefined}>
+          <div>
           <h2>Nos engagements</h2>
           <ul className="promises">
             {PROMISES.map((x) => (
@@ -242,6 +262,9 @@ export default function Home({ light = false }: { light?: boolean }) {
             ))}
           </ul>
           <p><a href={href('aide')}>Questions fréquentes →</a></p>
+          </div>
+          {IMAGES_DEMO ? <img className="img-illu" src={imgEquipe} alt="" /> : null}
+          </div>
         </div>
       </section>
 

@@ -863,3 +863,27 @@ html.theme-blanc .profile-tile.patient:hover { border-color: var(--green, #176b5
 html.theme-blanc .profile-tile.practitioner:hover { border-color: var(--navy, #0f2a47); }
 html.theme-blanc .profile-tile.structure:hover { border-color: var(--gold, #d9a441); }
 html.theme-blanc .foot { background: #ffffff; }
+
+/* ---------- Démo ?images=demo : images reprises d'ollidia.com ---------- */
+.img-band { position: relative; margin-top: 28px; border-radius: 22px; overflow: hidden; min-height: 300px; display: flex; align-items: center; }
+.img-band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 30%; }
+.img-band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(15, 42, 71, .82) 0%, rgba(15, 42, 71, .55) 45%, rgba(15, 42, 71, 0) 75%); }
+.img-band-text { position: relative; z-index: 1; padding: 36px 40px; max-width: 520px; color: #fff; display: grid; gap: 10px; }
+.img-band-text h2 { color: #fff; font-size: clamp(22px, 3vw, 30px); margin: 0; }
+.img-band-text p { margin: 0; color: #dbe7f1; font-size: 16px; }
+.img-split { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.img-split.reverse { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+.img-split.reverse > img { order: -1; }
+.img-illu { width: 100%; max-width: 420px; justify-self: center; height: auto; }
+@media (max-width: 760px) {
+  .img-split, .img-split.reverse { grid-template-columns: 1fr; }
+  .img-split.reverse > img { order: 0; }
+  .img-illu { max-width: 300px; }
+  .img-band { min-height: 240px; }
+  .img-band::after { background: linear-gradient(180deg, rgba(15, 42, 71, .2) 0%, rgba(15, 42, 71, .85) 75%); }
+  .img-band { align-items: flex-end; }
+  .img-band-text { padding: 24px; }
+}
+.img-split .how, .img-split .promises { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.img-split .how li, .img-split .promises li { min-width: 0; }
+@media (max-width: 520px) { .img-split .how, .img-split .promises { grid-template-columns: 1fr; } }
