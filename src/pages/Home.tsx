@@ -124,6 +124,21 @@ export default function Home({ light = false }: { light?: boolean }) {
     if (open) dialog.current?.showModal();
   }, [open]);
 
+  // Démo images : le fil d'actualités passe sous « Comment ça marche ? » et « Nos engagements ».
+  const newsSection = (
+    news.data && news.data.content.length ? (
+        <section className="section news-section">
+          <div className="wrap">
+            <h2>Actualités{country ? ` · ${countryName(country)}` : ''}</h2>
+            <NewsGrid items={news.data.content.slice(0, showAllNews ? undefined : 4)} place={(n) => countryName(n.countryCode)}
+              date={(n) => new Date(n.publishedAt).toLocaleDateString('fr-FR')} onOpen={setOpen} />
+            {!showAllNews && news.data.content.length > 4 ? (
+              <button type="button" className="btn secondary news-more" onClick={() => setShowAllNews(true)}>Voir toutes les actualités</button>
+            ) : null}
+          </div>
+        </section>
+      ) : null
+  );
   return (
     <>
       <section className={IMAGES_DEMO && !light ? 'hero-band hero-photo' : 'hero-band'} style={IMAGES_DEMO && !light ? { backgroundImage: `url(${imgMedecin})` } : undefined}>
@@ -199,18 +214,7 @@ export default function Home({ light = false }: { light?: boolean }) {
         </section>
       ) : null}
 
-      {news.data && news.data.content.length ? (
-        <section className="section news-section">
-          <div className="wrap">
-            <h2>Actualités{country ? ` · ${countryName(country)}` : ''}</h2>
-            <NewsGrid items={news.data.content.slice(0, showAllNews ? undefined : 4)} place={(n) => countryName(n.countryCode)}
-              date={(n) => new Date(n.publishedAt).toLocaleDateString('fr-FR')} onOpen={setOpen} />
-            {!showAllNews && news.data.content.length > 4 ? (
-              <button type="button" className="btn secondary news-more" onClick={() => setShowAllNews(true)}>Voir toutes les actualités</button>
-            ) : null}
-          </div>
-        </section>
-      ) : null}
+      {IMAGES_DEMO ? null : newsSection}
 
       {open ? (
         <dialog ref={dialog} className="news-dialog" onClose={() => setOpen(null)} aria-labelledby="news-dialog-title">
@@ -257,6 +261,8 @@ export default function Home({ light = false }: { light?: boolean }) {
           </div>
         </div>
       </section>
+
+      {IMAGES_DEMO ? newsSection : null}
 
       </>)}
 
