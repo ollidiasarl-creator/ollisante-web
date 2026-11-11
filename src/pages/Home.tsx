@@ -5,7 +5,7 @@ import { NewsGrid } from '../NewsGrid';
 import { IMAGES_DEMO, SHOWCASE, useCountry } from '../brand';
 import imgEquipe from '../assets/photos/soins-tension.jpg';
 import imgReunion from '../assets/photos/medecin-telephone.jpg';
-import imgMedecin from '../assets/illustrations/medecin.jpg';
+import imgMedecin from '../assets/photos/accueil-clinique.jpg';
 import { useCountries } from '../components';
 import { flag } from '../format';
 import { useLoad, useSession } from '../hooks';

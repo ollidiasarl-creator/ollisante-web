@@ -7,7 +7,6 @@ import medecinsEcrans from './assets/photos/medecins-ecrans.jpg';
 import soignant from './assets/photos/soignant.jpg';
 import tabletteMedecin from './assets/photos/tablette-medecin.jpg';
 import couloirHopital from './assets/photos/couloir-hopital.jpg';
-import accueilClinique from './assets/photos/accueil-clinique.jpg';
 
 /** Photos de la démo « images » (?images=demo), une par thème de page. */
 const PHOTOS = {
@@ -17,7 +16,7 @@ const PHOTOS = {
   aide: { src: stethoscope, pos: '40% 30%' },
   medecin: { src: medecinsEcrans, pos: '55% 40%' },
   structure: { src: couloirHopital, pos: '50% 45%' },
-  structures: { src: accueilClinique, pos: '50% 45%' },
+  structures: { src: couloirHopital, pos: '50% 45%' },
   disponibilites: { src: tabletteMedecin, pos: '55% 45%' },
   recherche: { src: soignant, pos: '50% 35%' },
 };
