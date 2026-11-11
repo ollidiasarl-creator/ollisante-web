@@ -3,8 +3,8 @@ import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
 import { NewsGrid } from '../NewsGrid';
 import { IMAGES_DEMO, SHOWCASE, useCountry } from '../brand';
-import imgEquipe from '../assets/illustrations/equipe.png';
-import imgReunion from '../assets/illustrations/reunion.png';
+import imgEquipe from '../assets/photos/soins-tension.jpg';
+import imgReunion from '../assets/photos/medecin-telephone.jpg';
 import imgMedecin from '../assets/illustrations/medecin.jpg';
 import { useCountries } from '../components';
 import { flag } from '../format';
@@ -236,7 +236,7 @@ export default function Home({ light = false }: { light?: boolean }) {
             ))}
           </ol>
           </div>
-          {IMAGES_DEMO ? <img className="img-illu" src={imgReunion} alt="" /> : null}
+          {IMAGES_DEMO ? <img className="img-illu img-photo" src={imgReunion} alt="" /> : null}
           </div>
         </div>
       </section>
@@ -253,7 +253,7 @@ export default function Home({ light = false }: { light?: boolean }) {
           </ul>
           <p><a href={href('aide')}>Questions fréquentes →</a></p>
           </div>
-          {IMAGES_DEMO ? <img className="img-illu" src={imgEquipe} alt="" /> : null}
+          {IMAGES_DEMO ? <img className="img-illu img-photo" src={imgEquipe} alt="" /> : null}
           </div>
         </div>
       </section>
