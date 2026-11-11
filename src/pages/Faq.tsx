@@ -1,3 +1,4 @@
+import { PhotoBanner } from '../PhotoBanner';
 import { getAppConfig, getFaq } from '../api';
 import { HelpIcon } from '../HelpMenu';
 import { useLoad } from '../hooks';
@@ -11,6 +12,7 @@ export default function Faq({ openId }: { openId?: string | null }) {
   return (
     <section className="page">
       <div className="wrap narrow" style={{ maxWidth: 820 }}>
+        <PhotoBanner theme="aide" />
         <h1 className="row" style={{ marginBottom: 6 }}><HelpIcon size={30} /> Centre d’aide</h1>
         <p className="muted" style={{ marginBottom: 18 }}>Questions fréquentes</p>
         {faq.loading ? <div className="spinner" aria-label="Chargement" /> : null}

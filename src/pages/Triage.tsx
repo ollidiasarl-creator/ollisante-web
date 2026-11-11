@@ -1,3 +1,4 @@
+import { PhotoBanner } from '../PhotoBanner';
 import { useEffect, useState } from 'react';
 import { Specialty, getSpecialties } from '../api';
 import { useCountry, useLockedCountry } from '../brand';
@@ -40,6 +41,7 @@ export default function Triage() {
   return (
     <div className="page">
       <div className="wrap triage">
+        <PhotoBanner theme="orientation" />
         <p className="triage-kicker">Quel médecin consulter ?</p>
         {step !== 'result' && step !== 'urgent' ? <div className="triage-progress"><span style={{ width: `${n * 25}%` }} /></div> : null}
 

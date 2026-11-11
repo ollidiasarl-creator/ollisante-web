@@ -1,3 +1,4 @@
+import { PhotoBanner } from '../PhotoBanner';
 import { getFacilities } from '../api';
 import { useLockedCountry } from '../brand';
 import { useCountries } from '../components';
@@ -17,6 +18,7 @@ export default function Structures({ pays: asked, ville, localite }: { pays: str
   return (
     <div className="page">
       <div className="wrap stack">
+        <PhotoBanner theme="structures" />
         <h1>{name ? <>{flag(pays)} Structures de santé · {name}{where ? ` · ${where}` : ''}</> : 'Structures de santé'}</h1>
         <SearchForm key={`${pays}|${ville}|${localite}`} page="structures" initial={{ pays, ville, localite }} className="filters" />
         {list.loading && !list.data ? <div className="spinner" aria-label="Chargement" /> : null}

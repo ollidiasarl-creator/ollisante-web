@@ -1,3 +1,4 @@
+import { PhotoBanner } from '../PhotoBanner';
 import { useEffect, useMemo, useState } from 'react';
 import { Facility, Practitioner, Slot, getFacilities, getSlots, searchPractitioners } from '../api';
 import { useCountry, useLockedCountry } from '../brand';
@@ -76,6 +77,7 @@ export default function Availability({ query }: { query: URLSearchParams }) {
   return (
     <div className="page">
       <div className="wrap">
+        <PhotoBanner theme="disponibilites" />
         <h1>{place ? <>{flag(place.code)} Médecins disponibles · {where || place.nameFr}</> : 'Médecins disponibles'}</h1>
         <p className="muted">Les horaires libres des prochains jours. Choisissez-en un pour réserver.</p>
         <SearchForm key={`${pays}|${ville}|${localite}|${specialite}`} page="disponibilites" initial={{ pays, ville, localite, specialite, q }} className="filters" />

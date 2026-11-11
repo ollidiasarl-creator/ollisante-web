@@ -1,3 +1,4 @@
+import { PhotoBanner } from '../PhotoBanner';
 import { Emblem, SHOWCASE, StoreBadges } from '../brand';
 
 /** Télécharger l'application : patients et médecins (les structures ont aussi leur espace web). */
@@ -5,6 +6,7 @@ export default function AppDownload() {
   return (
     <section className="page">
       <div className="wrap narrow stack" style={{ gap: 22 }}>
+        <PhotoBanner theme="application" />
         <div className="row" style={{ gap: 14 }}>
           <Emblem size={56} />
           <h1>L’application Ollisanté</h1>

@@ -1,3 +1,4 @@
+import { PhotoBanner } from '../PhotoBanner';
 import { useEffect, useState } from 'react';
 import { Practitioner, Slot, getFacilities, searchPractitioners } from '../api';
 import { useCountry, useLockedCountry } from '../brand';
@@ -41,6 +42,7 @@ export default function Search({ query }: { query: URLSearchParams }) {
   return (
     <div className="page">
       <div className="wrap">
+        <PhotoBanner theme="recherche" />
         <h1>{place ? <>{flag(place.code)} Santé · {place.nameFr}{where ? ` · ${where}` : ''}</> : 'Trouver un professionnel de santé'}</h1>
         <p className="muted">
           {place

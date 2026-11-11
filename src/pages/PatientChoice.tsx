@@ -1,3 +1,4 @@
+import { PhotoBanner } from '../PhotoBanner';
 import { useEffect, useState } from 'react';
 import { getFacilities, searchPractitioners } from '../api';
 import { useCountry, useLockedCountry } from '../brand';
@@ -40,6 +41,7 @@ export default function PatientChoice() {
   return (
     <div className="page">
       <div className="wrap patient-choice">
+        <PhotoBanner theme="patient" />
         <h1>Prendre rendez-vous</h1>
         <label className="field">
           <span>Votre pays</span>

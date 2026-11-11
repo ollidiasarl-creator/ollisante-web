@@ -1,3 +1,4 @@
+import { PhotoBanner } from '../PhotoBanner';
 import { href } from '../router';
 
 const INFO = {
@@ -21,6 +22,7 @@ export default function ProInfo({ profile }: { profile: 'medecin' | 'structure' 
   return (
     <div className="page">
       <div className="wrap pro-info">
+        <PhotoBanner theme={profile} />
         <h1>{i.title}</h1>
         <ul className="pro-points">
           {i.points.map((p) => <li key={p}>{p}</li>)}
