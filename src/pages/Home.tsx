@@ -126,7 +126,7 @@ export default function Home({ light = false }: { light?: boolean }) {
 
   return (
     <>
-      <section className="hero-band">
+      <section className={IMAGES_DEMO && !light ? 'hero-band hero-photo' : 'hero-band'} style={IMAGES_DEMO && !light ? { backgroundImage: `url(${imgMedecin})` } : undefined}>
         <div className="wrap hero-band-grid">
           <div className="hero-copy">
             <h1>Votre rendez-vous médical, <em>simplement</em></h1>
@@ -174,16 +174,6 @@ export default function Home({ light = false }: { light?: boolean }) {
           <Chevron />
         </a>
       </section>
-
-      {IMAGES_DEMO && !light ? (
-        <section className="wrap img-band" aria-label="Des médecins vérifiés">
-          <img src={imgMedecin} alt="" />
-          <div className="img-band-text">
-            <h2>Des médecins vérifiés, près de chez vous</h2>
-            <p>Chaque professionnel est contrôlé par notre équipe avant d’apparaître sur Ollisanté.</p>
-          </div>
-        </section>
-      ) : null}
 
 
       {SHOWCASE ? null : light ? (

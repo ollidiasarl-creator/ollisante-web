@@ -887,3 +887,17 @@ html.theme-blanc .foot { background: #ffffff; }
 .img-split .how, .img-split .promises { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .img-split .how li, .img-split .promises li { min-width: 0; }
 @media (max-width: 520px) { .img-split .how, .img-split .promises { grid-template-columns: 1fr; } }
+
+/* Démo ?images=demo : photo du médecin en fond du haut de page, comme sur ollidia.com */
+html.theme-blanc .hero-band.hero-photo, .hero-band.hero-photo {
+  position: relative; background-size: cover; background-position: 70% 30%; border-bottom: 0; color: #fff; padding-top: 72px; padding-bottom: 64px;
+}
+.hero-band.hero-photo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15, 42, 71, .78) 0%, rgba(15, 42, 71, .62) 60%, rgba(15, 42, 71, .78) 100%); }
+.hero-band.hero-photo > * { position: relative; z-index: 1; }
+html.theme-blanc .hero-band.hero-photo h1, .hero-band.hero-photo h1 { color: #fff; }
+html.theme-blanc .hero-band.hero-photo h1 em, .hero-band.hero-photo h1 em { color: #7fd6ae; }
+html.theme-blanc .hero-band.hero-photo .lead, .hero-band.hero-photo .lead,
+.hero-band.hero-photo .hero-points li, .hero-band.hero-photo .hero-stats dd { color: #e3edf5; opacity: 1; }
+html.theme-blanc .hero-band.hero-photo .hero-stats dt, .hero-band.hero-photo .hero-stats dt { color: #fff; }
+html.theme-blanc .hero-band.hero-photo .triage-link, .hero-band.hero-photo .triage-link { color: #fff; }
+html.theme-blanc .hero-band.hero-photo .hero-points svg { background: rgba(255,255,255,.18); color: #7fd6ae; }
