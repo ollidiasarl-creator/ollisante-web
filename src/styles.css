@@ -913,3 +913,15 @@ html.theme-blanc .hero-band.hero-photo .hero-points svg { background: rgba(255,2
 /* Photo claire de l'accueil d'une clinique : voile bleu nuit léger, cadrage sur les personnes */
 .hero-band.hero-photo { background-position: 60% 40%; }
 .hero-band.hero-photo::before { background: linear-gradient(180deg, rgba(15, 42, 71, .58) 0%, rgba(15, 42, 71, .45) 55%, rgba(15, 42, 71, .58) 100%); }
+
+/* Démo ?images=demo : haut de page en deux colonnes, texte à gauche et photo nette à droite */
+html.theme-blanc .hero-band.hero-split, .hero-band.hero-split { background: #ffffff; padding-top: 48px; padding-bottom: 48px; }
+.hero-band.hero-split .hero-band-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; justify-content: stretch; align-items: center; }
+.hero-band.hero-split .hero-copy { text-align: left; justify-items: start; }
+.hero-band.hero-split .hero-points, .hero-band.hero-split .hero-stats { justify-content: start; }
+.hero-band.hero-split h1 { white-space: normal; font-size: clamp(26px, 3.4vw, 40px); }
+.hero-split-img { width: 100%; max-width: 560px; justify-self: end; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 24px; box-shadow: 0 16px 40px rgba(15, 42, 71, 0.14); }
+@media (max-width: 860px) {
+  .hero-band.hero-split .hero-band-grid { grid-template-columns: 1fr; }
+  .hero-split-img { justify-self: center; max-width: 100%; order: -1; }
+}

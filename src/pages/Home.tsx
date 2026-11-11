@@ -5,7 +5,7 @@ import { NewsGrid } from '../NewsGrid';
 import { IMAGES_DEMO, SHOWCASE, useCountry } from '../brand';
 import imgEquipe from '../assets/photos/soins-tension.jpg';
 import imgReunion from '../assets/photos/medecin-telephone.jpg';
-import imgMedecin from '../assets/photos/accueil-clinique.jpg';
+import imgHero from '../assets/photos/calendrier.png';
 import { useCountries } from '../components';
 import { flag } from '../format';
 import { useLoad, useSession } from '../hooks';
@@ -141,7 +141,7 @@ export default function Home({ light = false }: { light?: boolean }) {
   );
   return (
     <>
-      <section className={IMAGES_DEMO && !light ? 'hero-band hero-photo' : 'hero-band'} style={IMAGES_DEMO && !light ? { backgroundImage: `url(${imgMedecin})` } : undefined}>
+      <section className={IMAGES_DEMO && !light ? 'hero-band hero-split' : 'hero-band'}>
         <div className="wrap hero-band-grid">
           <div className="hero-copy">
             <h1>Votre rendez-vous médical, <em>simplement</em></h1>
@@ -169,6 +169,7 @@ export default function Home({ light = false }: { light?: boolean }) {
             </dl>
             )}
           </div>
+          {IMAGES_DEMO && !light ? <img className="hero-split-img" src={imgHero} alt="" /> : null}
         </div>
       </section>
 
