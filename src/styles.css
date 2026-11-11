@@ -906,3 +906,7 @@ html.theme-blanc .hero-band.hero-photo .hero-points svg { background: rgba(255,2
 .photo-banner { height: 220px; border-radius: 20px; background-size: cover; background-repeat: no-repeat; margin: 0 0 22px; box-shadow: 0 10px 28px rgba(15, 42, 71, 0.10); }
 @media (max-width: 640px) { .photo-banner { height: 160px; border-radius: 16px; } }
 .img-illu.img-photo { max-width: 460px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 20px; box-shadow: 0 12px 30px rgba(15, 42, 71, 0.12); }
+/* Photo du haut de page plus claire : voile plus léger, texte lisible grâce à une ombre douce */
+.hero-band.hero-photo::before { background: linear-gradient(180deg, rgba(15, 42, 71, .52) 0%, rgba(15, 42, 71, .36) 55%, rgba(15, 42, 71, .50) 100%); }
+.hero-band.hero-photo h1, .hero-band.hero-photo .lead, .hero-band.hero-photo .hero-points li,
+.hero-band.hero-photo .hero-stats, .hero-band.hero-photo .triage-link { text-shadow: 0 1px 10px rgba(10, 25, 45, .55); }
