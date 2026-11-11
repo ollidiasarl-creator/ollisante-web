@@ -910,6 +910,3 @@ html.theme-blanc .hero-band.hero-photo .hero-points svg { background: rgba(255,2
 .hero-band.hero-photo::before { background: linear-gradient(180deg, rgba(15, 42, 71, .52) 0%, rgba(15, 42, 71, .36) 55%, rgba(15, 42, 71, .50) 100%); }
 .hero-band.hero-photo h1, .hero-band.hero-photo .lead, .hero-band.hero-photo .hero-points li,
 .hero-band.hero-photo .hero-stats, .hero-band.hero-photo .triage-link { text-shadow: 0 1px 10px rgba(10, 25, 45, .55); }
-/* Photo claire de l'accueil d'une clinique : voile bleu nuit léger, cadrage sur les personnes */
-.hero-band.hero-photo { background-position: 60% 40%; }
-.hero-band.hero-photo::before { background: linear-gradient(180deg, rgba(15, 42, 71, .58) 0%, rgba(15, 42, 71, .45) 55%, rgba(15, 42, 71, .58) 100%); }
