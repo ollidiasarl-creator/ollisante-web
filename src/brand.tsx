@@ -21,20 +21,8 @@ document.documentElement.classList.add('logo-c');
 export const WHITE_DEMO = true;
 if (WHITE_DEMO) document.documentElement.classList.add('theme-blanc');
 
-/**
- * Démo « images » : visible seulement avec le lien ollisante.com/?images=demo (mémorisé le temps de la visite) ;
- * « ?images=non » revient à la version en ligne. Les autres visiteurs ne voient aucun changement.
- */
-export const IMAGES_DEMO = (() => {
-  const asked = new URLSearchParams(window.location.search).get('images');
-  try {
-    if (asked === 'demo') sessionStorage.setItem('ollisante-images', 'demo');
-    if (asked === 'non') sessionStorage.removeItem('ollisante-images');
-    return sessionStorage.getItem('ollisante-images') === 'demo';
-  } catch {
-    return asked === 'demo';
-  }
-})();
+/** Version « images » (photos santé, validée le 12 novembre 2026), appliquée à tout le site. Version d'avant : tag git avant-images-partout. */
+export const IMAGES_DEMO = true;
 
 /** Signature visuelle : le O à la carte de l'Afrique (ou, en démo, le cercle ouvert et le point doré). */
 export function Emblem({ size = 40, id }: { size?: number; id?: string }) {
