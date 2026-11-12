@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { News, Specialty, getNews, getProfile, getSpecialties } from '../api';
 import { askCountry, askProfile } from '../CountryGate';
 import { NewsGrid } from '../NewsGrid';
-import { IMAGES_DEMO, SHOWCASE, useCountry } from '../brand';
+import { DESIGN_DEMO, IMAGES_DEMO, SHOWCASE, useCountry } from '../brand';
+import imgFluide from '../assets/photos/accueil-clinique.jpg';
+import imgPro from '../assets/photos/medecins-ecrans.jpg';
 import imgEquipe from '../assets/photos/soins-tension.jpg';
 import imgReunion from '../assets/photos/medecin-telephone.jpg';
 import imgMedecin from '../assets/illustrations/medecin.jpg';
@@ -141,9 +143,10 @@ export default function Home({ light = false }: { light?: boolean }) {
   );
   return (
     <>
-      <section className={IMAGES_DEMO && !light ? 'hero-band hero-photo' : 'hero-band'} style={IMAGES_DEMO && !light ? { backgroundImage: `url(${imgMedecin})` } : undefined}>
+      <section className={DESIGN_DEMO && !light ? 'hero-band hero-fluide' : IMAGES_DEMO && !light ? 'hero-band hero-photo' : 'hero-band'} style={!DESIGN_DEMO && IMAGES_DEMO && !light ? { backgroundImage: `url(${imgMedecin})` } : undefined}>
         <div className="wrap hero-band-grid">
           <div className="hero-copy">
+            {DESIGN_DEMO && !light ? <p className="fl-eyebrow"><span />Votre santé, plus accessible</p> : null}
             <h1>Votre rendez-vous médical, <em>simplement</em></h1>
             <p className="lead hero-sub">Trouvez un médecin et réservez en ligne, 24 h/24.</p>
             {light ? null : (
@@ -169,6 +172,17 @@ export default function Home({ light = false }: { light?: boolean }) {
             </dl>
             )}
           </div>
+          {DESIGN_DEMO && !light ? (
+            <div className="fl-visual" aria-hidden="true">
+              <img src={imgFluide} alt="" />
+              <span className="fl-badge fl-badge-top"><i />Médecins disponibles</span>
+              <span className="fl-badge fl-badge-bottom">
+                <b className="fl-cal"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="5" width="18" height="16" rx="3" /><path d="M3 10h18M8 3v4M16 3v4" /></svg></b>
+                <span><strong>Rendez-vous confirmé</strong><small>Aujourd’hui, 15:30</small></span>
+                <b className="fl-ok">✓</b>
+              </span>
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -189,6 +203,42 @@ export default function Home({ light = false }: { light?: boolean }) {
           <Chevron />
         </a>
       </section>
+
+      {DESIGN_DEMO && !light ? (<>
+        <section className="section fl-specs reveal">
+          <div className="wrap">
+            <div className="fl-head">
+              <div><p className="fl-kicker">Trouvez le bon spécialiste</p><h2>De qui avez-vous besoin ?</h2></div>
+              <a className="fl-link" href={href('recherche')}>Voir toutes les spécialités →</a>
+            </div>
+            <div className="fl-spec-grid">
+              {SPECIALTIES.slice(0, 4).map((x) => (
+                <a key={x.code} className="fl-spec" href={href('recherche', { specialite: x.code })} onClick={(e) => { e.preventDefault(); askCountry({ code: x.code, nameFr: x.name } as Specialty); }}>
+                  <SpecArt code={x.code} />
+                  <strong>{x.name}</strong>
+                  <span>{x.reasons}</span>
+                  <em>Consulter →</em>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="fl-steps reveal">
+          <div className="wrap fl-steps-grid">
+            <div>
+              <p className="fl-kicker light">Simple et rassurant</p>
+              <h2>Prenez soin de vous, sans perdre de temps.</h2>
+              <p className="fl-steps-lead">Ollisanté vous accompagne de la recherche du médecin jusqu’au rappel de votre consultation.</p>
+            </div>
+            <ol className="fl-step-list">
+              <li><span>01</span><strong>Recherchez</strong><p>Par spécialité, pays, ville ou quartier.</p></li>
+              <li><span>02</span><strong>Choisissez</strong><p>Comparez les médecins vérifiés et leurs horaires libres.</p></li>
+              <li><span>03</span><strong>Réservez</strong><p>Confirmez en une minute et recevez votre rappel.</p></li>
+            </ol>
+          </div>
+        </section>
+      </>) : null}
 
 
       {SHOWCASE ? null : light ? (
@@ -229,6 +279,7 @@ export default function Home({ light = false }: { light?: boolean }) {
       ) : null}
 
       {light ? null : (<>
+      {DESIGN_DEMO ? null : (
       <section className="section how-section">
         <div className="wrap">
           <div className={IMAGES_DEMO ? 'img-split' : undefined}>
@@ -244,8 +295,9 @@ export default function Home({ light = false }: { light?: boolean }) {
           </div>
         </div>
       </section>
+      )}
 
-      <section className="section promise-section">
+      <section className={DESIGN_DEMO ? 'section promise-section reveal' : 'section promise-section'}>
         <div className="wrap">
           <div className={IMAGES_DEMO ? 'img-split reverse' : undefined}>
           <div>
@@ -261,6 +313,30 @@ export default function Home({ light = false }: { light?: boolean }) {
           </div>
         </div>
       </section>
+
+      {DESIGN_DEMO ? (
+        <section className="section fl-pro-wrap reveal">
+          <div className="wrap">
+            <div className="fl-pro">
+              <div className="fl-pro-text">
+                <p className="fl-kicker gold">Professionnels de santé</p>
+                <h2>Votre cabinet, toujours à portée de main.</h2>
+                <p>Gérez vos disponibilités, recevez de nouveaux patients et suivez vos rendez-vous depuis un espace unique.</p>
+                <ul>
+                  <li>Un profil professionnel vérifié</li>
+                  <li>Vos agendas centralisés</li>
+                  <li>Des rappels automatiques à vos patients</li>
+                </ul>
+                <div className="row">
+                  <a className="btn" href={href('connexion/medecin')} onClick={(e) => { e.preventDefault(); askProfile('medecin'); }}>Rejoindre Ollisanté →</a>
+                  <a className="fl-link" href="/structure/" onClick={(e) => { e.preventDefault(); askProfile('structure'); }}>Je représente une structure</a>
+                </div>
+              </div>
+              <img src={imgPro} alt="" />
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {IMAGES_DEMO ? newsSection : null}
 

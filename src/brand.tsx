@@ -24,6 +24,40 @@ if (WHITE_DEMO) document.documentElement.classList.add('theme-blanc');
 /** Version « images » (photos santé, validée le 12 novembre 2026), appliquée à tout le site. Version d'avant : tag git avant-images-partout. */
 export const IMAGES_DEMO = true;
 
+/**
+ * Démo « site fluide » : visible seulement avec ollisante.com/?design=fluide (mémorisé le temps de la visite) ;
+ * « ?design=actuel » revient à la version en ligne. Les autres visiteurs ne voient aucun changement.
+ */
+export const DESIGN_DEMO = (() => {
+  const asked = new URLSearchParams(window.location.search).get('design');
+  try {
+    if (asked === 'fluide') sessionStorage.setItem('ollisante-design', 'fluide');
+    if (asked === 'actuel') sessionStorage.removeItem('ollisante-design');
+    return sessionStorage.getItem('ollisante-design') === 'fluide';
+  } catch {
+    return asked === 'fluide';
+  }
+})();
+if (DESIGN_DEMO) {
+  document.documentElement.classList.add('design-fluide');
+  // Apparition douce des sections au défilement (désactivée si l'utilisateur limite les animations).
+  const calm = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  if (!calm && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js-reveal');
+    const seen = new WeakSet<Element>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    const scan = () => document.querySelectorAll('.reveal').forEach((el) => {
+      if (!seen.has(el)) { seen.add(el); io.observe(el); }
+    });
+    new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+    window.addEventListener('DOMContentLoaded', scan);
+  }
+}
+
 /** Signature visuelle : le O à la carte de l'Afrique (ou, en démo, le cercle ouvert et le point doré). */
 export function Emblem({ size = 40, id }: { size?: number; id?: string }) {
   return <img id={id} src={emblem} alt="" width={size} height={size} className={NEW_LOGO ? 'emblem emblem-c' : 'emblem'} />;
