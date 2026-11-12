@@ -7,6 +7,7 @@ import { flag } from './format';
 import { go, href } from './router';
 import { useLockedCountry } from './brand';
 import { PlaceFields } from './Places';
+import { abTrack } from './ab';
 
 /**
  * Pays, ville, localité, spécialité et nom : chaque changement met aussitôt les résultats à jour (le nom, après une
@@ -144,8 +145,12 @@ export function SearchBar({ initial = '' }: { initial?: string }) {
 
   function submit(e: FormEvent) {
     e.preventDefault();
-    if (open && active >= 0 && items[active]) return items[active].run();
+    if (open && active >= 0 && items[active]) {
+      abTrack('SEARCH');
+      return items[active].run();
+    }
     if (!term) return;
+    abTrack('SEARCH');
     // Une spécialité désignée exactement (« généraliste », « dentiste »…) : choix du pays ; sinon, page de résultats.
     const s = exactSpecialty(text, specialties);
     if (s) {
@@ -181,7 +186,7 @@ export function SearchBar({ initial = '' }: { initial?: string }) {
               <Fragment key={it.key}>
                 {it.group && it.group !== items[i - 1]?.group ? <li className="sb-head" role="presentation">{it.group}</li> : null}
                 <li id={`sb-opt-${i}`} role="option" aria-selected={i === active} className={[i === active ? 'on' : '', it.key === 'all' ? 'sb-all' : ''].join(' ')}
-                  onMouseEnter={() => setActive(i)} onMouseDown={(e) => { e.preventDefault(); it.run(); }}>
+                  onMouseEnter={() => setActive(i)} onMouseDown={(e) => { e.preventDefault(); abTrack('SEARCH'); it.run(); }}>
                   <span className="sb-opt-icon" aria-hidden="true">{it.icon}</span>
                   <span><strong>{it.label}</strong>{it.sub ? <small>{it.sub}</small> : null}</span>
                 </li>

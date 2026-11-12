@@ -1,4 +1,5 @@
 import { href } from './router';
+import { abTrack } from './ab';
 
 /** À la place des créneaux pour un visiteur non connecté : les disponibilités ne se voient qu'une fois connecté. */
 export function LoginToBook({ practitionerId }: { practitionerId: string }) {
@@ -20,6 +21,7 @@ export function LoginToBook({ practitionerId }: { practitionerId: string }) {
  * puis arrive directement sur la réservation de cet horaire.
  */
 export function bookSlot(practitionerId: string, startsAt: string, signedIn: boolean) {
+  abTrack('BOOK');
   const target = href(`rdv/${practitionerId}`, { creneau: startsAt });
   if (signedIn) window.location.hash = target;
   else window.location.hash = href('connexion/patient', { suite: target });

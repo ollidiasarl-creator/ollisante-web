@@ -3,6 +3,7 @@
  * on garde la source sur l'appareil, puis on compte l'inscription si elle a lieu. Aucune donnée personnelle, et
  * seulement avec l'accord du visiteur (fenêtre « Vos données, vos choix ») : sans réponse, le scan attend ce choix.
  */
+import { abTrack } from './ab';
 import { getConsent, onConsent } from './consent';
 
 const KEY = 'ollisante-src';
@@ -66,6 +67,7 @@ export function campaignProfile(): CampaignProfile | null {
 
 /** Une inscription vient d'aboutir : on l'attribue à l'affiche scannée (une seule fois). */
 export function campaignSignup() {
+  abTrack('SIGNUP');
   const src = stored();
   if (!src || getConsent() !== 'accepted') return;
   send(src, 'SIGNUP');

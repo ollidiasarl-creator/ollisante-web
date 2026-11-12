@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import newEmblem from './logo-mark.svg';
+import { AB_VARIANT } from './ab';
 
 /**
  * Vitrine (réservation, comptes et tarifs remplacés par « Ollisanté ouvre bientôt ») : désactivée, le site complet
@@ -24,20 +25,8 @@ if (WHITE_DEMO) document.documentElement.classList.add('theme-blanc');
 /** Version « images » (photos santé, validée le 12 novembre 2026), appliquée à tout le site. Version d'avant : tag git avant-images-partout. */
 export const IMAGES_DEMO = true;
 
-/**
- * Démo « site fluide » : visible seulement avec ollisante.com/?design=fluide (mémorisé le temps de la visite) ;
- * « ?design=actuel » revient à la version en ligne. Les autres visiteurs ne voient aucun changement.
- */
-export const DESIGN_DEMO = (() => {
-  const asked = new URLSearchParams(window.location.search).get('design');
-  try {
-    if (asked === 'fluide') sessionStorage.setItem('ollisante-design', 'fluide');
-    if (asked === 'actuel') sessionStorage.removeItem('ollisante-design');
-    return sessionStorage.getItem('ollisante-design') === 'fluide';
-  } catch {
-    return asked === 'fluide';
-  }
-})();
+/** Version « fluide » de l'accueil (test A/B, voir ab.ts). */
+export const DESIGN_DEMO = AB_VARIANT.design === 'fluide';
 if (DESIGN_DEMO) {
   document.documentElement.classList.add('design-fluide');
   // Apparition douce des sections au défilement (désactivée si l'utilisateur limite les animations).
