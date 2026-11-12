@@ -5,7 +5,6 @@ import { NewsGrid } from '../NewsGrid';
 import { DESIGN_DEMO, IMAGES_DEMO, SHOWCASE, useCountry } from '../brand';
 import imgFluide from '../assets/photos/accueil-clinique.jpg';
 import imgPro from '../assets/photos/medecins-ecrans.jpg';
-import imgEquipe from '../assets/photos/soins-tension.jpg';
 import imgReunion from '../assets/photos/medecin-telephone.jpg';
 import imgMedecin from '../assets/illustrations/medecin.jpg';
 import { useCountries } from '../components';
@@ -297,22 +296,7 @@ export default function Home({ light = false }: { light?: boolean }) {
       </section>
       )}
 
-      <section className={DESIGN_DEMO ? 'section promise-section reveal' : 'section promise-section'}>
-        <div className="wrap">
-          <div className={IMAGES_DEMO ? 'img-split reverse' : undefined}>
-          <div>
-          <h2>Nos engagements</h2>
-          <ul className="promises">
-            {PROMISES.map((x) => (
-              <li key={x.title}><span className="promise-icon">{x.icon}</span><strong>{x.title}</strong></li>
-            ))}
-          </ul>
-          <p><a href={href('aide')}>Questions fréquentes →</a></p>
-          </div>
-          {IMAGES_DEMO ? <img className="img-illu img-photo" src={imgEquipe} alt="" /> : null}
-          </div>
-        </div>
-      </section>
+
 
       {DESIGN_DEMO ? (
         <section className="section fl-pro-wrap reveal">
